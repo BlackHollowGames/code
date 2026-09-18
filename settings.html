@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CodeLearn — Settings</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0d10;color:#f4f7fb;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit}
+.topbar{height:64px;border-bottom:1px solid #202630;background:#0e1116;display:flex;align-items:center;padding:0 28px;gap:30px}
+.logo{font-size:19px;font-weight:800}.logo span{color:#7dd3fc}
+.nav{display:flex;gap:5px}.nav a{color:#8f99a8;text-decoration:none;padding:9px 12px;border-radius:7px;font-size:14px}.nav a:hover,.nav a.active{background:#171c23;color:#fff}
+.wrap{max-width:900px;margin:auto;padding:38px 28px 60px}
+h1{font-size:34px;letter-spacing:-1px;margin:0 0 8px}.sub{color:#8e98a6;font-size:14px;margin-bottom:28px}
+.panel{background:#10141a;border:1px solid #202630;border-radius:10px;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:19px 20px;border-top:1px solid #202630}
+.row:first-child{border-top:0}
+.title{font-size:14px;font-weight:650}.desc{font-size:12px;color:#7d8794;margin-top:4px;line-height:1.5}
+.btn{border:1px solid #2a313b;background:#151a21;color:#dfe5ed;border-radius:7px;padding:9px 13px;cursor:pointer}.btn:hover{background:#1c232c}
+.toggle{width:42px;height:23px;border-radius:99px;background:#303844;position:relative;cursor:pointer;border:0}.toggle i{position:absolute;width:17px;height:17px;top:3px;left:3px;border-radius:50%;background:#fff;transition:.2s}.toggle.on{background:#7dd3fc}.toggle.on i{left:22px}
+select{background:#151a21;border:1px solid #2a313b;color:#e3e8ef;border-radius:7px;padding:9px 12px;outline:none}
+.danger{color:#ff8f8f;border-color:#513032}.danger:hover{background:#241719}
+@media(max-width:600px){.topbar{padding:0 16px}.nav{display:none}.wrap{padding:25px 16px}.row{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="logo">Code<span>Learn</span></div>
+<nav class="nav">
+<a href="index.html">Home</a>
+<a href="lesson.html">Lessons</a>
+<a href="practice.html">Practice</a>
+<a href="challenges.html">Challenges</a>
+<a href="progress.html">Progress</a>
+</nav>
+</header>
+
+<main class="wrap">
+<h1>Settings</h1>
+<div class="sub">Customize your CodeLearn experience.</div>
+
+<section class="panel">
+<div class="row">
+<div><div class="title">Guide Mode</div><div class="desc">Show visual guidance while completing lessons.</div></div>
+<button class="toggle on" id="guideToggle"><i></i></button>
+</div>
+
+<div class="row">
+<div><div class="title">Auto-run examples</div><div class="desc">Automatically run code examples when available.</div></div>
+<button class="toggle" id="autoToggle"><i></i></button>
+</div>
+
+<div class="row">
+<div><div class="title">Editor font size</div><div class="desc">Choose the size used in coding exercises.</div></div>
+<select id="fontSize">
+<option value="13">13px</option>
+<option value="14" selected>14px</option>
+<option value="15">15px</option>
+<option value="16">16px</option>
+<option value="18">18px</option>
+</select>
+</div>
+</section>
+
+<section class="panel">
+<div class="row">
+<div><div class="title">Reset learning progress</div><div class="desc">Clear lessons, practice progress, XP, and activity history.</div></div>
+<button class="btn danger" id="resetBtn">Reset progress</button>
+</div>
+</section>
+</main>
+
+<script>
+function setupToggle(id,key,defaultValue){
+const button=document.getElementById(id);
+let state=localStorage.getItem(key);
+
+if(state===null)state=String(defaultValue);
+
+function render(){
+const active=state==="true";
+button.classList.toggle("on",active);
+}
+
+button.addEventListener("click",()=>{
+state=state==="true"?"false":"true";
+localStorage.setItem(key,state);
+render();
+});
+
+render();
+}
+
+setupToggle("guideToggle","codelearnGuideMode",true);
+setupToggle("autoToggle","codelearnAutoRun",false);
+
+const fontSize=document.getElementById("fontSize");
+fontSize.value=localStorage.getItem("codelearnFontSize")||"14";
+
+fontSize.addEventListener("change",()=>{
+localStorage.setItem("codelearnFontSize",fontSize.value);
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+const confirmed=confirm("Reset all CodeLearn learning progress?");
+
+if(!confirmed)return;
+
+[
+"codelearnActivity",
+"codelearnLessons",
+"codelearnProjects",
+"codelearnLessonStep",
+"codelearnLessonComplete",
+"codelearnSolvedPractice",
+"codelearnPracticeXP",
+"codelearnSolvedChallenges",
+"codelearnStreak",
+"codelearnSessions",
+"codelearnMinutes"
+].forEach(key=>localStorage.removeItem(key));
+
+window.location.href="progress.html";
+});
+</script>
+
+</body>
+</html>

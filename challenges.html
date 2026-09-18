@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CodeLearn — Challenges</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0d10;color:#f4f7fb;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}
+a{text-decoration:none;color:inherit}
+.topbar{height:64px;border-bottom:1px solid #202630;background:#0e1116;display:flex;align-items:center;padding:0 28px;gap:30px}
+.logo{font-size:19px;font-weight:800}.logo span{color:#7dd3fc}
+.nav{display:flex;gap:5px}.nav a{color:#8f99a8;padding:9px 12px;border-radius:7px;font-size:14px}.nav a:hover,.nav a.active{background:#171c23;color:#fff}
+.search{margin-left:auto;width:210px;height:36px;border:1px solid #252c35;background:#151a21;color:#fff;border-radius:7px;padding:0 12px;outline:none}
+.wrap{max-width:1240px;margin:auto;padding:38px 28px 60px}
+.header{margin-bottom:26px}.header h1{margin:0 0 8px;font-size:34px;letter-spacing:-1px}.header p{margin:0;color:#8d97a4;font-size:14px}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:18px}
+.panel{background:#10141a;border:1px solid #202630;border-radius:10px;padding:18px}
+.filters{display:flex;flex-direction:column;gap:5px}.filter{border:0;background:transparent;color:#8d97a5;text-align:left;padding:10px;border-radius:7px;cursor:pointer}.filter:hover,.filter.active{background:#191f27;color:#fff}
+.list{display:grid;gap:10px}
+.challenge{border:1px solid #222a34;background:#11161d;border-radius:9px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.challenge:hover{border-color:#313b48}
+.info h3{margin:0 0 6px;font-size:14px}.info p{margin:0;color:#7d8794;font-size:12px}
+.tags{display:flex;gap:6px;margin-top:10px}.tag{font-size:10px;color:#8993a0;background:#1a2028;border-radius:5px;padding:4px 7px}
+.btn{border:1px solid #2a313b;background:#151a21;color:#dfe5ed;border-radius:7px;padding:9px 13px;cursor:pointer;white-space:nowrap}.btn:hover{background:#1c232c}.btn.solved{color:#8de0b2;border-color:#294836}
+.empty{color:#737d8a;font-size:13px;padding:20px 0}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.filters{display:grid;grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.topbar{padding:0 16px}.nav{display:none}.search{width:150px}.wrap{padding:24px 16px}.challenge{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="logo">Code<span>Learn</span></div>
+<nav class="nav">
+<a href="index.html">Home</a>
+<a href="lesson.html">Lessons</a>
+<a href="practice.html">Practice</a>
+<a class="active" href="challenges.html">Challenges</a>
+<a href="progress.html">Progress</a>
+</nav>
+<input class="search" id="search" placeholder="Search challenges...">
+</header>
+
+<main class="wrap">
+<section class="header">
+<h1>Challenges</h1>
+<p>Test your skills with focused coding problems.</p>
+</section>
+
+<div class="layout">
+<aside class="panel">
+<div class="filters">
+<button class="filter active" data-filter="all">All challenges</button>
+<button class="filter" data-filter="javascript">JavaScript</button>
+<button class="filter" data-filter="html">HTML</button>
+<button class="filter" data-filter="css">CSS</button>
+<button class="filter" data-filter="easy">Easy</button>
+<button class="filter" data-filter="medium">Medium</button>
+</div>
+</aside>
+
+<section class="panel">
+<div class="list" id="challengeList"></div>
+</section>
+</div>
+</main>
+
+<script>
+const challenges=[
+{id:1,title:"Create a variable",desc:"Create a variable named score and give it the value 100.",tags:["JavaScript","Easy"],code:"let score = 100;"},
+{id:2,title:"Write a function",desc:"Create a function called greet that returns a greeting.",tags:["JavaScript","Easy"],code:"function greet() { return 'Hello'; }"},
+{id:3,title:"Check a condition",desc:"Write an if statement that checks whether score is greater than 50.",tags:["JavaScript","Easy"],code:"if (score > 50) {}"},
+{id:4,title:"Create a heading",desc:"Write an HTML h1 element containing the text Hello World.",tags:["HTML","Easy"],code:"<h1>Hello World</h1>"},
+{id:5,title:"Style a button",desc:"Use CSS to add padding to a button.",tags:["CSS","Easy"],code:"button { padding: 10px; }"},
+{id:6,title:"Find an array item",desc:"Use JavaScript to access the first item in an array.",tags:["JavaScript","Medium"],code:"items[0]"}
+];
+
+let currentFilter="all";
+
+function solved(){
+try{return JSON.parse(localStorage.getItem("codelearnSolvedChallenges")||"[]")}catch{return[]}
+}
+
+function render(){
+const list=document.getElementById("challengeList");
+const done=solved();
+const query=document.getElementById("search").value.toLowerCase().trim();
+
+const filtered=challenges.filter(c=>{
+const matchesFilter=currentFilter==="all"||
+c.tags.some(t=>t.toLowerCase()===currentFilter);
+const matchesSearch=!query||
+c.title.toLowerCase().includes(query)||
+c.desc.toLowerCase().includes(query)||
+c.tags.join(" ").toLowerCase().includes(query);
+return matchesFilter&&matchesSearch;
+});
+
+if(!filtered.length){
+list.innerHTML='<div class="empty">No challenges match your search.</div>';
+return;
+}
+
+list.innerHTML=filtered.map(c=>{
+const isSolved=done.includes(c.id);
+return `<article class="challenge">
+<div class="info">
+<h3>${c.title}</h3>
+<p>${c.desc}</p>
+<div class="tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+</div>
+<button class="btn ${isSolved?"solved":""}" onclick="openChallenge(${c.id})">${isSolved?"Solved":"Start"}</button>
+</article>`;
+}).join("");
+}
+
+function openChallenge(id){
+const challenge=challenges.find(c=>c.id===id);
+if(!challenge)return;
+
+localStorage.setItem("codelearnCurrentChallenge",JSON.stringify(challenge));
+window.location.href="practice.html?challenge="+id;
+}
+
+document.querySelectorAll(".filter").forEach(button=>{
+button.addEventListener("click",()=>{
+document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+currentFilter=button.dataset.filter;
+render();
+});
+});
+
+document.getElementById("search").addEventListener("input",render);
+
+render();
+</script>
+
+</body>
+</html>
