@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeLearn — Progress</title>
+
+<style>
+:root{
+  --bg:#080b10;
+  --panel:#0d1219;
+  --panel2:#111821;
+  --panel3:#151e28;
+  --border:#202a36;
+  --border2:#2b3948;
+  --text:#edf3f9;
+  --muted:#8b99a8;
+  --muted2:#667482;
+  --blue:#5b9cff;
+  --blue2:#377de8;
+  --green:#45d483;
+  --yellow:#e9b95b;
+  --purple:#9b7cff;
+  --red:#ff5d6c;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  border:0;
+}
+
+.topbar{
+  height:64px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:0 22px;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,11,16,.95);
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(18px);
+}
+
+.brand{
+  min-width:180px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:18px;
+  font-weight:760;
+  letter-spacing:-.035em;
+}
+
+.logo{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border:1px solid #315c9a;
+  border-radius:8px;
+  background:linear-gradient(145deg,#172d4c,#0d1726);
+  color:#8dbaff;
+  font:14px var(--mono);
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.nav a{
+  color:var(--muted);
+  text-decoration:none;
+  padding:9px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.nav a:hover,
+.nav a.active{
+  color:var(--text);
+  background:#111821;
+}
+
+.top-actions{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.search{
+  width:220px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 11px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0d1219;
+  color:#71808e;
+}
+
+.search svg{
+  width:15px;
+  height:15px;
+  flex:none;
+}
+
+.search input{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  font-size:12px;
+}
+
+.page{
+  width:min(1480px,calc(100% - 40px));
+  margin:auto;
+  padding:28px 0 60px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+  margin-bottom:23px;
+}
+
+.header h1{
+  margin:0;
+  font-size:30px;
+  letter-spacing:-.045em;
+}
+
+.header p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+}
+
+.header-button{
+  height:36px;
+  padding:0 13px;
+  border:1px solid var(--border2);
+  border-radius:8px;
+  background:#101720;
+  color:#aebbc7;
+  cursor:pointer;
+  font-size:10px;
+  font-weight:700;
+}
+
+.header-button:hover{
+  background:#17212c;
+  color:#fff;
+}
+
+.overview{
+  display:grid;
+  grid-template-columns:1.4fr repeat(3,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.overview-card{
+  min-height:126px;
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--panel);
+}
+
+.overview-card.primary-card{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(69,129,211,.16),transparent 45%),
+    #0d1219;
+  border-color:#26384d;
+}
+
+.overview-label{
+  color:#6e7c89;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.overview-value{
+  margin-top:10px;
+  font-size:28px;
+  line-height:1;
+  font-weight:760;
+  letter-spacing:-.04em;
+}
+
+.overview-sub{
+  margin-top:7px;
+  color:#758390;
+  font-size:10px;
+}
+
+.big-progress{
+  margin-top:15px;
+  height:6px;
+  background:#19232d;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.big-progress-fill{
+  width:42%;
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--blue2),var(--blue));
+  transition:.3s;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);
+  gap:16px;
+}
+
+.panel{
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--panel);
+  overflow:hidden;
+}
+
+.panel-header{
+  min-height:53px;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.panel-header strong{
+  font-size:11px;
+}
+
+.panel-header span{
+  color:#657380;
+  font-size:9px;
+}
+
+.learning{
+  padding:17px;
+}
+
+.path{
+  display:grid;
+  grid-template-columns:45px minmax(0,1fr) 105px;
+  gap:13px;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid #18212a;
+}
+
+.path:last-child{
+  border-bottom:0;
+}
+
+.path-icon{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border:1px solid #2a3948;
+  border-radius:9px;
+  background:#111a23;
+  color:#79a9df;
+  font:11px var(--mono);
+}
+
+.path-info h3{
+  margin:0 0 5px;
+  font-size:12px;
+}
+
+.path-info p{
+  margin:0 0 9px;
+  color:#697785;
+  font-size:9px;
+}
+
+.path-track{
+  height:5px;
+  border-radius:99px;
+  background:#19232d;
+  overflow:hidden;
+}
+
+.path-fill{
+  height:100%;
+  border-radius:99px;
+  background:var(--blue);
+  transition:.3s;
+}
+
+.path-percent{
+  text-align:right;
+  color:#8d9ba8;
+  font:10px var(--mono);
+}
+
+.activity-panel{
+  display:flex;
+  flex-direction:column;
+}
+
+.calendar{
+  padding:17px;
+}
+
+.calendar-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.calendar-title strong{
+  font-size:10px;
+}
+
+.calendar-title span{
+  color:#657380;
+  font-size:9px;
+}
+
+.week{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:5px;
+  margin-bottom:7px;
+}
+
+.day-label{
+  text-align:center;
+  color:#596775;
+  font-size:8px;
+  text-transform:uppercase;
+}
+
+.day{
+  aspect-ratio:1;
+  min-width:0;
+  border:1px solid #1d2731;
+  border-radius:4px;
+  background:#0b1016;
+  position:relative;
+}
+
+.day.active{
+  background:#214a39;
+  border-color:#337856;
+}
+
+.day.medium{
+  background:#183329;
+  border-color:#285b45;
+}
+
+.day.today{
+  outline:1px solid #467fc1;
+  outline-offset:1px;
+}
+
+.activity-summary{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.activity-box{
+  padding:11px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0c1218;
+}
+
+.activity-box strong{
+  display:block;
+  font-size:15px;
+}
+
+.activity-box span{
+  color:#657380;
+  font-size:8px;
+}
+
+.skills{
+  margin-top:16px;
+}
+
+.skill-row{
+  padding:12px 17px;
+  border-bottom:1px solid #18212a;
+}
+
+.skill-row:last-child{
+  border-bottom:0;
+}
+
+.skill-name{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+}
+
+.skill-name span:first-child{
+  color:#a9b5c0;
+  font-size:9px;
+}
+
+.skill-name span:last-child{
+  color:#6e7d8b;
+  font:9px var(--mono);
+}
+
+.skill-track{
+  height:5px;
+  background:#19232d;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.skill-fill{
+  height:100%;
+  border-radius:99px;
+  background:#608fc9;
+}
+
+.bottom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-top:16px;
+}
+
+.chart-panel{
+  min-height:285px;
+}
+
+.chart{
+  padding:20px;
+  height:230px;
+  position:relative;
+}
+
+.chart-grid{
+  position:absolute;
+  inset:20px 20px 38px 45px;
+  background:
+    linear-gradient(to bottom,transparent 24%,#19232d 25%,transparent 26%),
+    linear-gradient(to bottom,transparent 49%,#19232d 50%,transparent 51%),
+    linear-gradient(to bottom,transparent 74%,#19232d 75%,transparent 76%);
+}
+
+.chart-svg{
+  position:absolute;
+  inset:20px 20px 38px 45px;
+  width:calc(100% - 65px);
+  height:calc(100% - 58px);
+  overflow:visible;
+}
+
+.chart-line{
+  fill:none;
+  stroke:#5b9cff;
+  stroke-width:2;
+  vector-effect:non-scaling-stroke;
+}
+
+.chart-area{
+  fill:url(#areaGradient);
+  opacity:.15;
+}
+
+.chart-point{
+  fill:#0d1219;
+  stroke:#6ca7f5;
+  stroke-width:2;
+}
+
+.chart-y{
+  position:absolute;
+  left:20px;
+  top:20px;
+  bottom:38px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  color:#53616f;
+  font:8px var(--mono);
+}
+
+.chart-x{
+  position:absolute;
+  left:45px;
+  right:20px;
+  bottom:17px;
+  display:flex;
+  justify-content:space-between;
+  color:#53616f;
+  font:8px var(--mono);
+}
+
+.history{
+  padding:7px 16px 13px;
+}
+
+.history-row{
+  display:grid;
+  grid-template-columns:35px minmax(0,1fr) 75px;
+  gap:10px;
+  align-items:center;
+  padding:11px 0;
+  border-bottom:1px solid #18212a;
+}
+
+.history-row:last-child{
+  border-bottom:0;
+}
+
+.history-icon{
+  width:31px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border:1px solid #293845;
+  border-radius:7px;
+  background:#101820;
+  color:#6d9bd2;
+  font:9px var(--mono);
+}
+
+.history-main strong{
+  display:block;
+  font-size:9px;
+  margin-bottom:4px;
+}
+
+.history-main span{
+  color:#5f6d79;
+  font-size:8px;
+}
+
+.history-xp{
+  text-align:right;
+  color:#83a9d6;
+  font:9px var(--mono);
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:#667482;
+  font-size:10px;
+}
+
+@media(max-width:1100px){
+  .overview{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .bottom-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:760px){
+  .topbar{
+    padding:0 12px;
+  }
+
+  .brand{
+    min-width:auto;
+  }
+
+  .nav{
+    display:none;
+  }
+
+  .search{
+    width:150px;
+  }
+
+  .page{
+    width:min(100% - 24px,1480px);
+    padding-top:20px;
+  }
+
+  .header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .overview{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .overview-card.primary-card{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:500px){
+  .overview{
+    grid-template-columns:1fr;
+  }
+
+  .overview-card.primary-card{
+    grid-column:auto;
+  }
+
+  .header-actions{
+    width:100%;
+  }
+
+  .header-button{
+    flex:1;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+    <div class="logo">&lt;/&gt;</div>
+    <span>CodeLearn</span>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="lesson.html">Lessons</a>
+    <a href="practice.html">Practice</a>
+    <a href="challenges.html">Challenges</a>
+    <a class="active" href="progress.html">Progress</a>
+  </nav>
+
+  <div class="top-actions">
+
+
+<label class="search">
+
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="11" cy="11" r="7"></circle>
+    <path d="m20 20-4-4"></path>
+  </svg>
+
+  <input id="searchInput" placeholder="Search">
+
+</label>
+
+
+  </div>
+
+</header>
+
+<main class="page">
+
+  <section class="header">
+
+
+<div>
+  <h1>Your progress</h1>
+  <p>Track what you have learned and see how your coding skills are developing.</p>
+</div>
+
+<div class="header-actions">
+  <button class="header-button" id="practiceBtn">Practice</button>
+  <button class="header-button" id="lessonBtn">Continue lesson</button>
+</div>
+
+
+  </section>
+
+  <section class="overview">
+
+
+<div class="overview-card primary-card">
+
+  <div class="overview-label">Overall completion</div>
+
+  <div class="overview-value" id="overallPercent">42%</div>
+
+  <div class="overview-sub">
+    Keep working through your learning path.
+  </div>
+
+  <div class="big-progress">
+    <div class="big-progress-fill" id="overallFill"></div>
+  </div>
+
+</div>
+
+<div class="overview-card">
+  <div class="overview-label">Lessons</div>
+  <div class="overview-value" id="lessonCount">1</div>
+  <div class="overview-sub">Completed lessons</div>
+</div>
+
+<div class="overview-card">
+  <div class="overview-label">Practice</div>
+  <div class="overview-value" id="practiceCount">0</div>
+  <div class="overview-sub">Exercises solved</div>
+</div>
+
+<div class="overview-card">
+  <div class="overview-label">XP earned</div>
+  <div class="overview-value" id="xpCount">0</div>
+  <div class="overview-sub">Total learning XP</div>
+</div>
+
+
+  </section>
+
+  <section class="dashboard">
+
+
+<div>
+
+  <div class="panel">
+
+    <div class="panel-header">
+      <strong>Learning paths</strong>
+      <span>Current progress</span>
+    </div>
+
+    <div class="learning">
+
+      <div class="path">
+
+        <div class="path-icon">JS</div>
+
+        <div class="path-info">
+          <h3>JavaScript Fundamentals</h3>
+          <p>Variables, types, operators, conditions, functions and arrays.</p>
+
+          <div class="path-track">
+            <div class="path-fill" style="width:42%"></div>
+          </div>
+        </div>
+
+        <div class="path-percent">42%</div>
+
+      </div>
+
+      <div class="path">
+
+        <div class="path-icon">WEB</div>
+
+        <div class="path-info">
+          <h3>Web Development</h3>
+          <p>HTML structure, CSS styling and interactive browser experiences.</p>
+
+          <div class="path-track">
+            <div class="path-fill" style="width:18%"></div>
+          </div>
+        </div>
+
+        <div class="path-percent">18%</div>
+
+      </div>
+
+      <div class="path">
+
+        <div class="path-icon">DOM</div>
+
+        <div class="path-info">
+          <h3>Interactive JavaScript</h3>
+          <p>Events, elements, state and building dynamic interfaces.</p>
+
+          <div class="path-track">
+            <div class="path-fill" style="width:8%"></div>
+          </div>
+        </div>
+
+        <div class="path-percent">8%</div>
+
+      </div>
+
+      <div class="path">
+
+        <div class="path-icon">APP</div>
+
+        <div class="path-info">
+          <h3>Build Projects</h3>
+          <p>Apply what you know by creating complete browser projects.</p>
+
+          <div class="path-track">
+            <div class="path-fill" style="width:2%"></div>
+          </div>
+        </div>
+
+        <div class="path-percent">2%</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="panel skills">
+
+    <div class="panel-header">
+      <strong>Skill breakdown</strong>
+      <span>Estimated mastery</span>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-name">
+        <span>Variables</span>
+        <span>72%</span>
+      </div>
+      <div class="skill-track">
+        <div class="skill-fill" style="width:72%"></div>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-name">
+        <span>Data types</span>
+        <span>55%</span>
+      </div>
+      <div class="skill-track">
+        <div class="skill-fill" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-name">
+        <span>Operators</span>
+        <span>41%</span>
+      </div>
+      <div class="skill-track">
+        <div class="skill-fill" style="width:41%"></div>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-name">
+        <span>Conditions</span>
+        <span>26%</span>
+      </div>
+      <div class="skill-track">
+        <div class="skill-fill" style="width:26%"></div>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-name">
+        <span>Functions</span>
+        <span>12%</span>
+      </div>
+      <div class="skill-track">
+        <div class="skill-fill" style="width:12%"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<aside class="panel activity-panel">
+
+  <div class="panel-header">
+    <strong>Learning activity</strong>
+    <span>Last 4 weeks</span>
+  </div>
+
+  <div class="calendar">
+
+    <div class="calendar-title">
+      <strong>Activity</strong>
+      <span id="activityTotal">0 sessions</span>
+    </div>
+
+    <div class="week">
+      <div class="day-label">M</div>
+      <div class="day-label">T</div>
+      <div class="day-label">W</div>
+      <div class="day-label">T</div>
+      <div class="day-label">F</div>
+      <div class="day-label">S</div>
+      <div class="day-label">S</div>
+    </div>
+
+    <div class="week">
+      <div class="day"></div>
+      <div class="day medium"></div>
+      <div class="day"></div>
+      <div class="day active"></div>
+      <div class="day"></div>
+      <div class="day medium"></div>
+      <div class="day"></div>
+    </div>
+
+    <div class="week">
+      <div class="day active"></div>
+      <div class="day active"></div>
+      <div class="day"></div>
+      <div class="day medium"></div>
+      <div class="day"></div>
+      <div class="day active"></div>
+      <div class="day"></div>
+    </div>
+
+    <div class="week">
+      <div class="day"></div>
+      <div class="day medium"></div>
+      <div class="day active"></div>
+      <div class="day active"></div>
+      <div class="day medium"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+    </div>
+
+    <div class="week">
+      <div class="day active"></div>
+      <div class="day"></div>
+      <div class="day medium"></div>
+      <div class="day today"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+    </div>
+
+    <div class="activity-summary">
+
+      <div class="activity-box">
+        <strong id="streak">0</strong>
+        <span>DAY STREAK</span>
+      </div>
+
+      <div class="activity-box">
+        <strong id="sessions">0</strong>
+        <span>SESSIONS</span>
+      </div>
+
+      <div class="activity-box">
+        <strong id="minutes">0</strong>
+        <span>MINUTES</span>
+      </div>
+
+      <div class="activity-box">
+        <strong id="weeklyXp">0</strong>
+        <span>WEEKLY XP</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
+
+
+  </section>
+
+  <section class="bottom-grid">
+
+
+<div class="panel chart-panel">
+
+  <div class="panel-header">
+    <strong>Learning activity</strong>
+    <span>XP over time</span>
+  </div>
+
+  <div class="chart">
+
+    <div class="chart-grid"></div>
+
+    <div class="chart-y">
+      <span>500</span>
+      <span>400</span>
+      <span>300</span>
+      <span>200</span>
+      <span>100</span>
+      <span>0</span>
+    </div>
+
+    <svg class="chart-svg" viewBox="0 0 600 180" preserveAspectRatio="none">
+
+      <defs>
+        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5b9cff"/>
+          <stop offset="100%" stop-color="#5b9cff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <path
+        class="chart-area"
+        d="M0 150 L80 132 L160 138 L240 105 L320 118 L400 75 L480 88 L600 35 L600 180 L0 180 Z"
+      />
+
+      <path
+        class="chart-line"
+        d="M0 150 L80 132 L160 138 L240 105 L320 118 L400 75 L480 88 L600 35"
+      />
+
+      <circle class="chart-point" cx="0" cy="150" r="4"/>
+      <circle class="chart-point" cx="80" cy="132" r="4"/>
+      <circle class="chart-point" cx="160" cy="138" r="4"/>
+      <circle class="chart-point" cx="240" cy="105" r="4"/>
+      <circle class="chart-point" cx="320" cy="118" r="4"/>
+      <circle class="chart-point" cx="400" cy="75" r="4"/>
+      <circle class="chart-point" cx="480" cy="88" r="4"/>
+      <circle class="chart-point" cx="600" cy="35" r="4"/>
+
+    </svg>
+
+    <div class="chart-x">
+      <span>Week 1</span>
+      <span>Week 2</span>
+      <span>Week 3</span>
+      <span>Week 4</span>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="panel">
+
+  <div class="panel-header">
+    <strong>Recent activity</strong>
+    <span>Latest sessions</span>
+  </div>
+
+  <div class="history" id="history">
+
+    <div class="history-row">
+
+      <div class="history-icon">JS</div>
+
+      <div class="history-main">
+        <strong>Understanding Variables</strong>
+        <span>Lesson completed</span>
+      </div>
+
+      <div class="history-xp">+100 XP</div>
+
+    </div>
+
+    <div class="history-row">
+
+      <div class="history-icon">01</div>
+
+      <div class="history-main">
+        <strong>Store a number</strong>
+        <span>Practice exercise</span>
+      </div>
+
+      <div class="history-xp">+50 XP</div>
+
+    </div>
+
+    <div class="history-row">
+
+      <div class="history-icon">WEB</div>
+
+      <div class="history-main">
+        <strong>Web Development</strong>
+        <span>Learning path started</span>
+      </div>
+
+      <div class="history-xp">+25 XP</div>
+
+    </div>
+
+    <div class="history-row">
+
+      <div class="history-icon">JS</div>
+
+      <div class="history-main">
+        <strong>JavaScript Fundamentals</strong>
+        <span>Path progress updated</span>
+      </div>
+
+      <div class="history-xp">+25 XP</div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  </section>
+
+</main>
+
+<script>
+const solved = JSON.parse(
+  localStorage.getItem("codelearnSolvedPractice") || "[]"
+);
+
+const practiceXP = Number(
+  localStorage.getItem("codelearnPracticeXP") || 0
+);
+
+const lessonStep = Number(
+  localStorage.getItem("codelearnLessonStep") || 1
+);
+
+const streak = Number(
+  localStorage.getItem("codelearnStreak") || 0
+);
+
+const sessions = Number(
+  localStorage.getItem("codelearnSessions") || 0
+);
+
+const minutes = Number(
+  localStorage.getItem("codelearnMinutes") || 0
+);
+
+function updateProgress(){
+
+  const practiceCount = solved.length;
+
+  const lessonCompleted =
+    Number(localStorage.getItem("codelearnLessonComplete") || 0);
+
+  const calculatedLessonProgress =
+    Math.min(100, Math.round((lessonStep / 4) * 100));
+
+  const overall =
+    Math.round(
+      Math.min(
+        100,
+        calculatedLessonProgress * .7 +
+        Math.min(practiceCount * 4,30)
+      )
+    );
+
+  document.getElementById("overallPercent").textContent =
+    overall + "%";
+
+  document.getElementById("overallFill").style.width =
+    overall + "%";
+
+  document.getElementById("lessonCount").textContent =
+    lessonCompleted || (lessonStep > 1 ? 1 : 0);
+
+  document.getElementById("practiceCount").textContent =
+    practiceCount;
+
+  document.getElementById("xpCount").textContent =
+    practiceXP + (lessonCompleted ? 100 : 0);
+
+  document.getElementById("streak").textContent =
+    streak;
+
+  document.getElementById("sessions").textContent =
+    sessions;
+
+  document.getElementById("minutes").textContent =
+    minutes;
+
+  document.getElementById("weeklyXp").textContent =
+    practiceXP;
+
+  document.getElementById("activityTotal").textContent =
+    sessions + " sessions";
+}
+
+document.getElementById("practiceBtn").addEventListener("click",()=>{
+  window.location.href = "practice.html";
+});
+
+document.getElementById("lessonBtn").addEventListener("click",()=>{
+  window.location.href = "lesson.html";
+});
+
+document.getElementById("searchInput").addEventListener("keydown",event=>{
+
+  if(event.key !== "Enter") return;
+
+  const query = event.target.value.toLowerCase().trim();
+
+  if(query.includes("lesson")){
+    window.location.href = "lesson.html";
+  }
+  else if(query.includes("practice")){
+    window.location.href = "practice.html";
+  }
+  else if(query.includes("challenge")){
+    window.location.href = "challenges.html";
+  }
+  else if(query.includes("home")){
+    window.location.href = "index.html";
+  }
+
+});
+
+document.querySelectorAll(".path").forEach(path=>{
+
+  path.addEventListener("click",()=>{
+
+    const title =
+      path.querySelector("h3").textContent.toLowerCase();
+
+    if(title.includes("javascript")){
+      window.location.href = "lesson.html";
+    }
+
+    if(title.includes("web development")){
+      window.location.href = "lesson.html";
+    }
+
+  });
+
+});
+
+updateProgress();
+</script>
+
+</body>
+</html>
