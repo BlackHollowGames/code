@@ -1,5673 +1,2381 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#050505">
-  <meta
-    name="description"
-    content="CodeLearn — learn to code through interactive lessons, practice, challenges, and projects."
-  >
+  <meta name="description" content="CodeLearn — learn to code through interactive lessons, practice, challenges, and projects.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>CodeLearn — Learn to Code</title>
 
   <style>
+    :root {
+      --bg: #050505;
+      --surface: #0b0b0d;
+      --surface-2: #101013;
+      --surface-3: #151519;
+      --border: #29292e;
+      --border-light: #3b3b42;
+      --text: #f5f5f7;
+      --muted: #92929b;
+      --muted-2: #66666f;
+      --yellow: #ffd900;
+      --purple: #8b5cf6;
+      --green: #5ee39a;
+      --blue: #4ea8ff;
+      --red: #ff6678;
+      --max: 1380px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
 
-    /* ============================================================
-       CODELEARN
-       HOME PAGE
-       ============================================================ */
-
-    /* ============================================================
-       RESET
-       ============================================================ */
-
-    *,
-    *::before,
-    *::after
-    {
+    * {
       box-sizing: border-box;
     }
 
-    html
-    {
-      margin: 0;
-      padding: 0;
+    html {
       scroll-behavior: smooth;
-      background: #050505;
+      background: var(--bg);
     }
 
-    body
-    {
+    body {
       margin: 0;
-      padding: 0;
-      background: #050505;
-      color: #ffffff;
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
     }
 
-    img
-    {
-      max-width: 100%;
-      display: block;
+    button,
+    input {
+      font: inherit;
     }
 
-    svg
-    {
-      display: block;
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
     }
 
-    a
-    {
+    a {
       color: inherit;
       text-decoration: none;
     }
 
-    button
-    {
-      font: inherit;
+    ::selection {
+      background: var(--yellow);
+      color: #111;
     }
 
-    ::selection
-    {
-      background: #ffd900;
-      color: #111111;
-    }
-
-    /* ============================================================
-       ROOT
-       ============================================================ */
-
-    :root
-    {
-      --yellow: #ffd900;
-      --yellow-soft: #ffe86a;
-      --purple: #7c45ff;
-      --purple-dark: #5425d6;
-      --blue: #4ea8ff;
-      --green: #65e39a;
-      --red: #ff6474;
-      --white: #ffffff;
-      --black: #050505;
-      --black-2: #090909;
-      --black-3: #0e0e12;
-      --panel: #111116;
-      --panel-2: #15151b;
-      --border: #2d2d34;
-      --border-light: #44444c;
-      --text: #f5f5f7;
-      --muted: #a1a1aa;
-      --muted-2: #777780;
-      --max: 1440px;
-      --radius: 0px;
-      --ease: cubic-bezier(.2,.8,.2,1);
-    }
-
-    /* ============================================================
-       PAGE WRAPPER
-       ============================================================ */
-
-    .page
-    {
-      width: 100%;
-      min-height: 100vh;
-      background: var(--black);
-    }
-
-    .container
-    {
-      width: min(
-        calc(100% - 64px),
-        var(--max)
-      );
+    .container {
+      width: min(calc(100% - 48px), var(--max));
       margin: 0 auto;
     }
 
-    /* ============================================================
-       PROMO BAR
-       ============================================================ */
+    /* NAV */
 
-    .promo
-    {
-      position: relative;
-      z-index: 100;
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 22px;
-      padding: 10px 20px;
-      background: var(--yellow);
-      color: #111111;
-      overflow: hidden;
-    }
-
-    .promo::before
-    {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(255,255,255,.28),
-          transparent
-        );
-      transform: translateX(-100%);
-      animation: promoShine 6s linear infinite;
-    }
-
-    @keyframes promoShine
-    {
-      0%
-      {
-        transform: translateX(-100%);
-      }
-
-      35%
-      {
-        transform: translateX(100%);
-      }
-
-      100%
-      {
-        transform: translateX(100%);
-      }
-    }
-
-    .promo-content
-    {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      text-align: center;
-    }
-
-    .promo-label
-    {
-      font-size: 14px;
-      font-weight: 850;
-      letter-spacing: .02em;
-    }
-
-    .promo-button
-    {
-      border: 0;
-      padding: 10px 18px;
-      background: #4f19d7;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 850;
-      cursor: pointer;
-      transition:
-        transform .2s var(--ease),
-        background .2s var(--ease);
-    }
-
-    .promo-button:hover
-    {
-      background: #37109d;
-      transform: translateY(-2px);
-    }
-
-    /* ============================================================
-       NAVIGATION
-       ============================================================ */
-
-    .site-nav
-    {
+    .nav {
       position: sticky;
       top: 0;
-      z-index: 90;
-      height: 76px;
-      border-bottom: 1px solid #292930;
-      background: rgba(7,7,17,.94);
+      z-index: 100;
+      height: 72px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,5,5,.92);
       backdrop-filter: blur(18px);
     }
 
-    .nav-inner
-    {
-      width: min(
-        calc(100% - 64px),
-        var(--max)
-      );
+    .nav-inner {
       height: 100%;
-      margin: 0 auto;
+      width: min(calc(100% - 48px), var(--max));
+      margin: auto;
       display: flex;
       align-items: center;
-      gap: 38px;
+      gap: 34px;
     }
 
-    .brand
-    {
-      flex-shrink: 0;
+    .brand {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-      font-size: 23px;
-      font-weight: 950;
-      letter-spacing: -1.8px;
+      gap: 7px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      white-space: nowrap;
     }
 
-    .brand-box
-    {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1px 4px 2px;
-      border: 2px solid #ffffff;
+    .brand-mark {
+      border: 2px solid white;
+      padding: 1px 5px 2px;
       line-height: 1;
     }
 
-    .brand-learn
-    {
+    .brand-accent {
       color: var(--yellow);
     }
 
-    .nav-links
-    {
+    .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
-      color: #c4c4cb;
-      font-size: 14px;
-      font-weight: 650;
+      gap: 25px;
     }
 
-    .nav-link
-    {
+    .nav-link {
       position: relative;
-      padding: 29px 0;
-      transition:
-        color .2s ease;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      padding: 27px 0;
+      transition: color .2s ease;
     }
 
-    .nav-link::after
-    {
+    .nav-link:hover,
+    .nav-link.active {
+      color: white;
+    }
+
+    .nav-link.active::after {
       content: "";
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 19px;
+      bottom: 18px;
       height: 2px;
       background: var(--yellow);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition:
-        transform .2s var(--ease);
     }
 
-    .nav-link:hover
-    {
-      color: #ffffff;
-    }
-
-    .nav-link:hover::after
-    {
-      transform: scaleX(1);
-    }
-
-    .nav-actions
-    {
+    .nav-actions {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
     }
 
-    .nav-search
-    {
+    .search-button,
+    .mobile-button {
       width: 40px;
       height: 40px;
-      border: 1px solid #42424a;
+      border: 1px solid var(--border-light);
       background: transparent;
-      color: #ffffff;
+      color: white;
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition:
-        border-color .2s ease,
-        background .2s ease;
+      transition: .2s ease;
     }
 
-    .nav-search:hover
-    {
+    .search-button:hover,
+    .mobile-button:hover {
       border-color: var(--yellow);
-      background: #171711;
+      background: #111108;
     }
 
-    .nav-search svg
-    {
-      width: 18px;
-      height: 18px;
-    }
-
-    .nav-button
-    {
+    .start-button {
+      min-height: 40px;
+      padding: 0 17px;
       border: 0;
       background: var(--yellow);
-      color: #111111;
-      padding: 12px 20px;
-      font-size: 13px;
+      color: #111;
+      font-size: 12px;
       font-weight: 900;
       cursor: pointer;
-      transition:
-        transform .2s var(--ease),
-        box-shadow .2s var(--ease);
+      transition: .2s var(--ease);
     }
 
-    .nav-button:hover
-    {
+    .start-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255,217,0,.18);
+      box-shadow: 0 10px 25px rgba(255,217,0,.14);
     }
 
-    .mobile-menu
-    {
+    .mobile-button {
       display: none;
-      width: 42px;
-      height: 42px;
-      border: 1px solid #44444c;
-      background: transparent;
-      color: #ffffff;
-      cursor: pointer;
     }
 
-    /* ============================================================
-       HERO
-       ============================================================ */
+    /* HERO */
 
-    .hero
-    {
+    .hero {
       position: relative;
-      min-height: 760px;
+      min-height: 680px;
       display: flex;
       align-items: center;
       overflow: hidden;
-      border-bottom: 1px solid #29292f;
+      border-bottom: 1px solid var(--border);
       background:
-        radial-gradient(
-          circle at 76% 42%,
-          rgba(124,69,255,.13),
-          transparent 29%
-        ),
-        radial-gradient(
-          circle at 91% 70%,
-          rgba(255,217,0,.08),
-          transparent 26%
-        ),
-        #050505;
+        radial-gradient(circle at 78% 42%, rgba(139,92,246,.14), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255,217,0,.07), transparent 25%),
+        var(--bg);
     }
 
-    .hero-grid
-    {
+    .hero-grid {
       position: absolute;
       inset: 0;
-      pointer-events: none;
-      opacity: .24;
+      opacity: .2;
       background-image:
-        linear-gradient(
-          rgba(255,255,255,.035) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,.035) 1px,
-          transparent 1px
-        );
-      background-size: 56px 56px;
-      mask-image:
-        linear-gradient(
-          90deg,
-          transparent,
-          black 30%,
-          black 75%,
-          transparent
-        );
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: linear-gradient(90deg, transparent, black 30%, black 80%, transparent);
     }
 
-    .hero-glow
-    {
-      position: absolute;
-      width: 650px;
-      height: 650px;
-      right: -160px;
-      top: 70px;
-      border-radius: 50%;
-      background:
-        radial-gradient(
-          circle,
-          rgba(124,69,255,.16),
-          transparent 66%
-        );
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .hero-inner
-    {
+    .hero-inner {
       position: relative;
       z-index: 2;
-      width: min(
-        calc(100% - 64px),
-        var(--max)
-      );
-      margin: 0 auto;
+      width: min(calc(100% - 48px), var(--max));
+      margin: auto;
       display: grid;
-      grid-template-columns:
-        minmax(0, 1.03fr)
-        minmax(480px, .97fr);
-      align-items: center;
+      grid-template-columns: 1fr .9fr;
       gap: 70px;
-      padding: 95px 0;
+      align-items: center;
+      padding: 90px 0;
     }
 
-    .hero-copy
-    {
-      max-width: 720px;
-    }
-
-    .eyebrow
-    {
+    .eyebrow {
       display: flex;
       align-items: center;
-      gap: 11px;
-      margin-bottom: 25px;
-      color: #b8b8bf;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        monospace;
-      font-size: 12px;
+      gap: 10px;
+      color: var(--muted);
+      font: 11px monospace;
       font-weight: 800;
       letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
 
-    .eyebrow-line
-    {
-      width: 34px;
+    .eyebrow-line {
+      width: 32px;
       height: 1px;
       background: var(--yellow);
     }
 
-    .hero-title
-    {
+    .hero-title {
       margin: 0;
-      max-width: 850px;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-      font-size:
-        clamp(
-          54px,
-          7vw,
-          94px
-        );
-      font-weight: 900;
+      max-width: 800px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(54px, 7vw, 92px);
       line-height: .94;
       letter-spacing: -6px;
+      font-weight: 900;
     }
 
-    .hero-title .yellow
-    {
+    .hero-title .accent {
       color: var(--yellow);
     }
 
-    .hero-title .purple
-    {
-      color: #966dff;
+    .hero-title .purple {
+      color: #9d78ff;
     }
 
-    .hero-description
-    {
+    .hero-description {
       max-width: 650px;
-      margin: 30px 0 0;
-      color: #b7b7be;
-      font-size: 19px;
+      margin: 28px 0 0;
+      color: #a4a4ad;
+      font-size: 17px;
       line-height: 1.7;
     }
 
-    .hero-actions
-    {
+    .hero-actions {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
-      gap: 13px;
-      margin-top: 34px;
+      gap: 11px;
+      margin-top: 32px;
     }
 
-    .button-primary
-    {
+    .primary,
+    .secondary {
+      min-height: 48px;
+      padding: 0 21px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 0 23px;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 850;
+      transition: .2s var(--ease);
+    }
+
+    .primary {
       border: 0;
       background: var(--yellow);
-      color: #111111;
-      font-size: 14px;
-      font-weight: 900;
-      cursor: pointer;
-      transition:
-        transform .2s var(--ease),
-        box-shadow .2s var(--ease);
+      color: #111;
     }
 
-    .button-primary:hover
-    {
+    .primary:hover {
       transform: translateY(-3px);
-      box-shadow:
-        0 14px 35px rgba(255,217,0,.18);
+      box-shadow: 0 13px 30px rgba(255,217,0,.16);
     }
 
-    .button-outline
-    {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 0 23px;
-      border: 1px solid #55555d;
+    .secondary {
+      border: 1px solid var(--border-light);
       background: transparent;
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition:
-        border-color .2s ease,
-        background .2s ease,
-        transform .2s ease;
+      color: white;
     }
 
-    .button-outline:hover
-    {
+    .secondary:hover {
       border-color: var(--yellow);
-      background: #14140b;
+      background: #111108;
       transform: translateY(-2px);
     }
 
-    .hero-meta
-    {
+    .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 25px;
-      margin-top: 38px;
-      color: #77777f;
-      font-family:
-        ui-monospace,
-        monospace;
-      font-size: 12px;
+      gap: 22px;
+      margin-top: 32px;
+      color: var(--muted-2);
+      font: 11px monospace;
     }
 
-    .hero-meta-item
-    {
+    .meta-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
-    .meta-dot
-    {
+    .status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 15px rgba(101,227,154,.5);
+      box-shadow: 0 0 14px rgba(94,227,154,.4);
     }
 
-    /* ============================================================
-       HERO CODE GRAPHIC
-       ============================================================ */
+    /* HERO EDITOR */
 
-    .hero-graphic
-    {
+    .hero-editor {
       position: relative;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 470px;
+      display: grid;
+      place-items: center;
     }
 
-    .graphic-back-square
-    {
-      position: absolute;
-      width: 370px;
-      height: 370px;
-      border: 1px solid rgba(255,217,0,.22);
-      transform: rotate(9deg);
-    }
-
-    .graphic-back-square-two
-    {
+    .editor-glow {
       position: absolute;
       width: 420px;
       height: 420px;
-      border: 1px solid rgba(124,69,255,.18);
-      transform: rotate(-8deg);
+      border-radius: 50%;
+      background: rgba(139,92,246,.13);
+      filter: blur(45px);
     }
 
-    .code-window
-    {
+    .editor-window {
       position: relative;
-      z-index: 4;
+      z-index: 2;
       width: min(100%, 540px);
-      background: #0c0c0f;
-      border: 1px solid #414149;
-      box-shadow:
-        22px 22px 0 rgba(255,217,0,.9),
-        0 30px 90px rgba(0,0,0,.55);
-      transform:
-        perspective(1000px)
-        rotateY(-5deg)
-        rotateX(2deg);
-      transition:
-        transform .6s var(--ease);
+      border: 1px solid #404047;
+      background: #0b0b0e;
+      box-shadow: 20px 20px 0 rgba(255,217,0,.8), 0 30px 80px rgba(0,0,0,.55);
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+      transition: transform .5s var(--ease);
     }
 
-    .code-window:hover
-    {
-      transform:
-        perspective(1000px)
-        rotateY(0deg)
-        rotateX(0deg)
-        translateY(-7px);
+    .editor-window:hover {
+      transform: perspective(1000px) rotateY(0) rotateX(0) translateY(-6px);
     }
 
-    .window-header
-    {
-      height: 47px;
-      border-bottom: 1px solid #2c2c31;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      gap: 7px;
-    }
-
-    .window-dot
-    {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #55555d;
-    }
-
-    .window-title
-    {
-      margin-left: auto;
-      margin-right: auto;
-      color: #777780;
-      font: 11px monospace;
-    }
-
-    .code-body
-    {
-      padding: 27px 28px 31px;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-      font-size: 15px;
-      line-height: 2;
-    }
-
-    .code-line
-    {
-      display: flex;
-      min-height: 30px;
-    }
-
-    .line-number
-    {
-      width: 34px;
-      flex-shrink: 0;
-      color: #4f4f56;
-      user-select: none;
-    }
-
-    .code-keyword
-    {
-      color: #a177ff;
-    }
-
-    .code-variable
-    {
-      color: #e9e9ed;
-    }
-
-    .code-function
-    {
-      color: #65e39a;
-    }
-
-    .code-string
-    {
-      color: #ffd900;
-    }
-
-    .code-comment
-    {
-      color: #606067;
-    }
-
-    .code-symbol
-    {
-      color: #8f8f98;
-    }
-
-    .code-cursor
-    {
-      display: inline-block;
-      width: 2px;
-      height: 18px;
-      margin-left: 5px;
-      background: var(--yellow);
-      vertical-align: -3px;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink
-    {
-      50%
-      {
-        opacity: 0;
-      }
-    }
-
-    .window-footer
-    {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid #2c2c31;
-      padding: 13px 17px;
-      color: #777780;
-      font: 11px monospace;
-    }
-
-    .window-status
-    {
+    .editor-top {
+      height: 46px;
       display: flex;
       align-items: center;
       gap: 7px;
+      padding: 0 15px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .status-green
-    {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-    }
-
-    /* ============================================================
-       FLOATING HERO GRAPHICS
-       ============================================================ */
-
-    .floating-card
-    {
-      position: absolute;
-      z-index: 8;
-      border: 1px solid #3c3c44;
-      background: rgba(12,12,15,.94);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 45px rgba(0,0,0,.35);
-    }
-
-    .floating-progress
-    {
-      left: -5px;
-      bottom: 42px;
-      width: 210px;
-      padding: 18px;
-    }
-
-    .floating-progress-label
-    {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      font-size: 11px;
-      color: #9999a2;
-    }
-
-    .floating-progress-value
-    {
-      color: var(--yellow);
-      font-family: monospace;
-      font-weight: 900;
-    }
-
-    .progress-track
-    {
-      width: 100%;
-      height: 6px;
-      background: #29292f;
-      overflow: hidden;
-    }
-
-    .progress-fill
-    {
-      width: 72%;
-      height: 100%;
-      background: var(--yellow);
-    }
-
-    .floating-terminal
-    {
-      right: -10px;
-      top: 48px;
-      width: 185px;
-      padding: 16px;
-    }
-
-    .terminal-label
-    {
-      margin-bottom: 9px;
-      color: #777780;
-      font: 10px monospace;
-    }
-
-    .terminal-command
-    {
-      color: var(--green);
-      font: 11px/1.8 monospace;
-    }
-
-    .terminal-command span
-    {
-      color: var(--yellow);
-    }
-
-    /* ============================================================
-       TRUST STRIP
-       ============================================================ */
-
-    .trust-strip
-    {
-      border-bottom: 1px solid #2a2a30;
-      background: #080808;
-    }
-
-    .trust-inner
-    {
-      min-height: 96px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
-
-    .trust-text
-    {
-      color: #66666e;
-      font: 11px monospace;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .trust-items
-    {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 42px;
-      flex-wrap: wrap;
-    }
-
-    .trust-item
-    {
-      color: #8a8a92;
-      font: 700 13px monospace;
-      transition: color .2s ease;
-    }
-
-    .trust-item:hover
-    {
-      color: #ffffff;
-    }
-
-    /* ============================================================
-       SECTION BASE
-       ============================================================ */
-
-    .section
-    {
-      position: relative;
-      padding: 120px 0;
-      border-bottom: 1px solid #29292f;
-      overflow: hidden;
-    }
-
-    .section-dark
-    {
-      background: #050505;
-    }
-
-    .section-panel
-    {
-      background: #080808;
-    }
-
-    .section-heading
-    {
-      max-width: 850px;
-      margin-bottom: 58px;
-    }
-
-    .section-kicker
-    {
-      margin-bottom: 17px;
-      color: var(--yellow);
-      font: 11px monospace;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-    }
-
-    .section-title
-    {
-      margin: 0;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-      font-size:
-        clamp(
-          40px,
-          5vw,
-          66px
-        );
-      line-height: 1;
-      letter-spacing: -3px;
-    }
-
-    .section-description
-    {
-      max-width: 670px;
-      margin-top: 21px;
-      color: #96969f;
-      font-size: 17px;
-      line-height: 1.75;
-    }
-
-    /* ============================================================
-       LEARN EXPERIENCE
-       ============================================================ */
-
-    .learning-layout
-    {
-      display: grid;
-      grid-template-columns:
-        minmax(0, .9fr)
-        minmax(0, 1.1fr);
-      gap: 80px;
-      align-items: center;
-    }
-
-    .learning-copy
-    {
-      max-width: 560px;
-    }
-
-    .learning-list
-    {
-      margin-top: 38px;
-      border-top: 1px solid #333339;
-    }
-
-    .learning-item
-    {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 20px;
-      padding: 25px 0;
-      border-bottom: 1px solid #333339;
-    }
-
-    .learning-number
-    {
-      color: var(--yellow);
-      font: 12px monospace;
-      padding-top: 3px;
-    }
-
-    .learning-item h3
-    {
-      margin: 0 0 8px;
-      font: 19px monospace;
-    }
-
-    .learning-item p
-    {
-      margin: 0;
-      color: #898991;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    /* ============================================================
-       INTERACTIVE IDE GRAPHIC
-       ============================================================ */
-
-    .ide-showcase
-    {
-      position: relative;
-      min-height: 540px;
-      display: flex;
-      align-items: center;
-    }
-
-    .ide-window
-    {
-      position: relative;
-      width: 100%;
-      min-height: 450px;
-      border: 1px solid #414149;
-      background: #0c0c0f;
-      box-shadow: 20px 20px 0 rgba(124,69,255,.25);
-    }
-
-    .ide-top
-    {
-      height: 52px;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid #2d2d34;
-      padding: 0 17px;
-      gap: 15px;
-    }
-
-    .ide-dots
-    {
-      display: flex;
-      gap: 6px;
-    }
-
-    .ide-dot
-    {
+    .editor-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #56565d;
+      background: #505057;
     }
 
-    .ide-file
-    {
-      padding: 9px 15px;
-      background: #15151a;
-      border: 1px solid #2c2c33;
-      color: #dddddf;
-      font: 11px monospace;
-    }
-
-    .ide-content
-    {
-      display: grid;
-      grid-template-columns: 190px 1fr;
-      min-height: 350px;
-    }
-
-    .ide-sidebar
-    {
-      border-right: 1px solid #2d2d34;
-      padding: 19px 12px;
-    }
-
-    .ide-side-label
-    {
-      margin: 0 8px 13px;
-      color: #5e5e66;
+    .editor-file {
+      margin-left: auto;
+      margin-right: auto;
+      color: #74747d;
       font: 10px monospace;
-      text-transform: uppercase;
     }
 
-    .ide-folder
-    {
-      padding: 8px;
-      color: #8d8d95;
-      font: 11px monospace;
+    .editor-code {
+      padding: 26px;
+      font: 13px/2 monospace;
     }
 
-    .ide-file-row
-    {
-      padding: 8px 8px 8px 21px;
-      color: #b9b9c1;
-      font: 11px monospace;
-    }
-
-    .ide-file-row.active
-    {
-      background: #1a1820;
-      color: var(--yellow);
-    }
-
-    .ide-code
-    {
-      padding: 20px 23px;
-      font: 12px/2 monospace;
-    }
-
-    .ide-line
-    {
+    .code-line {
       display: flex;
+      min-height: 27px;
     }
 
-    .ide-ln
-    {
-      width: 32px;
+    .line-number {
+      width: 34px;
       flex-shrink: 0;
-      color: #45454c;
+      color: #404047;
+      user-select: none;
     }
 
-    .ide-comment
-    {
-      color: #55555d;
+    .purple-text { color: #a078ff; }
+    .green-text { color: var(--green); }
+    .yellow-text { color: var(--yellow); }
+    .blue-text { color: var(--blue); }
+    .gray-text { color: #62626a; }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 15px;
+      margin-left: 5px;
+      vertical-align: -2px;
+      background: var(--yellow);
+      animation: blink 1s step-end infinite;
     }
 
-    .ide-key
-    {
-      color: #9b72ff;
+    @keyframes blink {
+      50% { opacity: 0; }
     }
 
-    .ide-green
-    {
-      color: var(--green);
-    }
-
-    .ide-yellow
-    {
-      color: var(--yellow);
-    }
-
-    .ide-purple
-    {
-      color: #b083ff;
-    }
-
-    .ide-footer
-    {
-      min-height: 48px;
-      border-top: 1px solid #2d2d34;
+    .editor-bottom {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
       color: #686871;
       font: 10px monospace;
     }
 
-    .ide-check
-    {
+    .editor-status {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       color: var(--green);
     }
 
-    /* ============================================================
-       FEATURE CARDS
-       ============================================================ */
-
-    .feature-grid
-    {
-      display: grid;
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      background: #38383e;
-    }
-
-    .feature-card
-    {
-      position: relative;
-      min-height: 300px;
-      padding: 34px;
-      background: #090909;
-      overflow: hidden;
-      transition:
-        background .3s ease;
-    }
-
-    .feature-card:hover
-    {
-      background: #0e0e11;
-    }
-
-    .feature-card::after
-    {
-      content: "";
+    .floating-progress {
       position: absolute;
-      width: 160px;
-      height: 160px;
-      right: -70px;
-      bottom: -70px;
-      border: 1px solid rgba(255,217,0,.15);
-      transform: rotate(45deg);
-      transition:
-        transform .4s var(--ease);
+      z-index: 5;
+      left: -20px;
+      bottom: 20px;
+      width: 200px;
+      padding: 17px;
+      border: 1px solid #38383f;
+      background: rgba(13,13,16,.96);
+      box-shadow: 0 20px 45px rgba(0,0,0,.35);
     }
 
-    .feature-card:hover::after
-    {
-      transform:
-        rotate(65deg)
-        scale(1.15);
+    .floating-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #85858d;
+      font: 10px monospace;
     }
 
-    .feature-number
-    {
+    .floating-value {
       color: var(--yellow);
-      font: 12px monospace;
+      font-weight: 900;
     }
 
-    .feature-icon
-    {
-      width: 52px;
-      height: 52px;
-      margin: 30px 0 25px;
-      border: 1px solid #47474e;
-      display: grid;
-      place-items: center;
-      color: var(--yellow);
-    }
-
-    .feature-icon svg
-    {
-      width: 24px;
-      height: 24px;
-    }
-
-    .feature-card h3
-    {
-      margin: 0 0 12px;
-      font: 22px monospace;
-    }
-
-    .feature-card p
-    {
-      margin: 0;
-      max-width: 330px;
-      color: #888890;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    /* ============================================================
-       PATHS
-       ============================================================ */
-
-    .paths-section
-    {
-      background:
-        radial-gradient(
-          circle at 15% 25%,
-          rgba(124,69,255,.08),
-          transparent 27%
-        ),
-        #080808;
-    }
-
-    .paths-grid
-    {
-      display: grid;
-      grid-template-columns:
-        repeat(3, minmax(0,1fr));
-      gap: 18px;
-    }
-
-    .path-card
-    {
-      position: relative;
-      min-height: 430px;
-      padding: 30px;
-      border: 1px solid #3a3a41;
-      background: #0b0b0e;
+    .progress-track {
+      height: 5px;
       overflow: hidden;
-      transition:
-        transform .35s var(--ease),
-        border-color .35s ease;
+      background: #29292f;
     }
 
-    .path-card:hover
-    {
-      transform: translateY(-7px);
-      border-color: #676770;
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--yellow);
+      transition: width .5s ease;
     }
 
-    .path-card.featured
-    {
-      border-color: rgba(255,217,0,.6);
+    /* DASHBOARD */
+
+    .dashboard {
+      border-bottom: 1px solid var(--border);
+      background: #080808;
     }
 
-    .path-top
-    {
+    .dashboard-inner {
+      padding: 54px 0;
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      color: var(--yellow);
+      font: 10px monospace;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .section-title {
+      margin: 0;
+      font: 900 clamp(28px,4vw,42px)/1 monospace;
+      letter-spacing: -2px;
+    }
+
+    .view-link {
+      color: var(--muted);
+      font: 11px monospace;
+      transition: color .2s ease;
+    }
+
+    .view-link:hover {
+      color: var(--yellow);
+    }
+
+    .continue {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 25px;
+      align-items: center;
+      padding: 26px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color .2s ease;
+    }
+
+    .continue:hover {
+      border-color: var(--border-light);
+    }
+
+    .continue-kicker {
+      color: var(--muted-2);
+      font: 10px monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .continue-title {
+      margin: 0;
+      font: 21px monospace;
+    }
+
+    .continue-description {
+      margin: 8px 0 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .continue-progress {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
+      max-width: 570px;
     }
 
-    .path-tag
-    {
+    .continue-progress .progress-track {
+      flex: 1;
+    }
+
+    .continue-percent {
+      color: var(--yellow);
+      font: 11px monospace;
+      min-width: 38px;
+    }
+
+    /* PATHS */
+
+    .paths {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .paths-header {
+      max-width: 700px;
+      margin-bottom: 42px;
+    }
+
+    .paths-description {
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .paths-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .path {
+      position: relative;
+      min-height: 335px;
+      padding: 25px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .3s var(--ease), border-color .3s ease;
+    }
+
+    .path:hover {
+      transform: translateY(-5px);
+      border-color: #55555d;
+    }
+
+    .path::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      bottom: -70px;
+      width: 170px;
+      height: 170px;
+      border: 1px solid rgba(255,217,0,.12);
+      transform: rotate(45deg);
+    }
+
+    .path-tag {
       color: var(--yellow);
       font: 10px monospace;
       letter-spacing: 1px;
     }
 
-    .path-level
-    {
-      padding: 6px 8px;
-      border: 1px solid #3d3d44;
-      color: #888891;
+    .path-icon {
+      width: 52px;
+      height: 52px;
+      margin: 25px 0 22px;
+      border: 1px solid #414148;
+      display: grid;
+      place-items: center;
+      color: var(--yellow);
+      font: 16px monospace;
+    }
+
+    .path:nth-child(2) .path-icon {
+      color: var(--blue);
+    }
+
+    .path:nth-child(3) .path-icon {
+      color: var(--purple);
+    }
+
+    .path:nth-child(4) .path-icon {
+      color: var(--green);
+    }
+
+    .path h3 {
+      margin: 0 0 9px;
+      font: 20px monospace;
+    }
+
+    .path p {
+      min-height: 60px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .path-progress-row {
+      margin-top: 20px;
+      padding-top: 17px;
+      border-top: 1px solid var(--border);
+    }
+
+    .path-progress-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--muted-2);
       font: 10px monospace;
     }
 
-    .path-graphic
-    {
-      height: 145px;
-      margin: 28px 0 25px;
-      border: 1px solid #303038;
-      background: #070708;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-    }
-
-    .path-graphic svg
-    {
-      width: 100%;
-      height: 100%;
-    }
-
-    .path-card h3
-    {
-      margin: 0 0 12px;
-      font: 25px monospace;
-    }
-
-    .path-card p
-    {
-      min-height: 70px;
-      margin: 0;
-      color: #8c8c94;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .path-bottom
-    {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid #2c2c32;
-    }
-
-    .path-lessons
-    {
-      color: #777780;
-      font: 11px monospace;
-    }
-
-    .path-arrow
-    {
-      width: 35px;
-      height: 35px;
-      border: 1px solid #55555d;
-      display: grid;
-      place-items: center;
+    .path-percent {
       color: var(--yellow);
-      transition:
-        background .2s ease,
-        color .2s ease;
     }
 
-    .path-card:hover .path-arrow
-    {
-      background: var(--yellow);
-      color: #111111;
+    .path .progress-track {
+      height: 4px;
     }
 
-    /* ============================================================
-       CURRICULUM TIMELINE
-       ============================================================ */
-
-    .timeline
-    {
-      position: relative;
-      max-width: 1000px;
-      margin: 70px auto 0;
-    }
-
-    .timeline::before
-    {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: #36363d;
-      transform: translateX(-50%);
-    }
-
-    .timeline-item
-    {
-      position: relative;
-      width: 50%;
-      padding: 0 55px 70px;
-    }
-
-    .timeline-item:nth-child(odd)
-    {
-      text-align: right;
-    }
-
-    .timeline-item:nth-child(even)
-    {
-      margin-left: 50%;
-    }
-
-    .timeline-dot
-    {
-      position: absolute;
-      top: 0;
-      width: 13px;
-      height: 13px;
-      border: 2px solid var(--yellow);
-      background: #050505;
-      transform: rotate(45deg);
-    }
-
-    .timeline-item:nth-child(odd) .timeline-dot
-    {
-      right: -6px;
-    }
-
-    .timeline-item:nth-child(even) .timeline-dot
-    {
-      left: -6px;
-    }
-
-    .timeline-number
-    {
-      color: var(--yellow);
-      font: 11px monospace;
-    }
-
-    .timeline-item h3
-    {
-      margin: 12px 0 9px;
-      font: 23px monospace;
-    }
-
-    .timeline-item p
-    {
-      margin: 0;
-      color: #85858e;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    /* ============================================================
-       PRACTICE SHOWCASE
-       ============================================================ */
-
-    .practice-layout
-    {
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 1fr);
-      gap: 75px;
-      align-items: center;
-    }
-
-    .practice-visual
-    {
-      position: relative;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .practice-screen
-    {
-      position: relative;
-      width: min(100%, 530px);
-      min-height: 390px;
-      border: 1px solid #45454d;
-      background: #0c0c0f;
-      box-shadow: -20px 20px 0 rgba(255,217,0,.12);
-    }
-
-    .practice-header
-    {
-      height: 50px;
-      border-bottom: 1px solid #2d2d34;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-    }
-
-    .practice-title
-    {
-      color: #aaaab2;
-      font: 11px monospace;
-    }
-
-    .practice-badge
-    {
-      padding: 6px 8px;
-      border: 1px solid rgba(101,227,154,.3);
-      color: var(--green);
+    .path-lessons {
+      margin-top: 9px;
+      color: #5e5e66;
       font: 9px monospace;
     }
 
-    .practice-body
-    {
-      padding: 26px;
+    /* FEATURES */
+
+    .features {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border);
+      background: #080808;
     }
 
-    .practice-question
-    {
-      margin-bottom: 24px;
-      color: #d5d5da;
-      font: 15px/1.6 monospace;
-    }
-
-    .practice-editor
-    {
-      border: 1px solid #34343b;
-      background: #070708;
-      padding: 18px;
-      font: 13px/2 monospace;
-    }
-
-    .practice-editor-line
-    {
-      min-height: 26px;
-    }
-
-    .practice-editor-line.dim
-    {
-      color: #55555d;
-    }
-
-    .practice-editor-line.active
-    {
-      color: var(--yellow);
-    }
-
-    .practice-result
-    {
-      margin-top: 18px;
-      padding: 13px;
-      border-left: 2px solid var(--green);
-      background: #0c1710;
-      color: #75d99b;
-      font: 11px monospace;
-    }
-
-    .practice-floating
-    {
-      position: absolute;
-      right: -10px;
-      bottom: 30px;
-      padding: 16px;
-      width: 190px;
-      border: 1px solid #44444b;
-      background: #111115;
-    }
-
-    .practice-floating-title
-    {
-      margin-bottom: 11px;
-      color: #777780;
-      font: 10px monospace;
-    }
-
-    .practice-floating-row
-    {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 9px 0;
-      color: #a2a2aa;
-      font: 10px monospace;
-    }
-
-    .practice-check
-    {
-      color: var(--green);
-    }
-
-    /* ============================================================
-       STATS
-       ============================================================ */
-
-    .stats
-    {
+    .feature-grid {
       display: grid;
-      grid-template-columns:
-        repeat(4, minmax(0,1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: #38383e;
+      background: var(--border);
     }
 
-    .stat
-    {
-      min-height: 180px;
+    .feature {
+      min-height: 250px;
       padding: 30px;
       background: #090909;
+      transition: background .25s ease;
     }
 
-    .stat-number
-    {
-      display: block;
-      margin-bottom: 13px;
+    .feature:hover {
+      background: #0d0d10;
+    }
+
+    .feature-number {
       color: var(--yellow);
-      font: 42px monospace;
-      font-weight: 900;
+      font: 10px monospace;
     }
 
-    .stat-label
-    {
-      color: #888891;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* ============================================================
-       QUOTE / PHILOSOPHY
-       ============================================================ */
-
-    .statement-section
-    {
-      padding: 155px 0;
-      background:
-        linear-gradient(
-          120deg,
-          #0a0a0a,
-          #101016
-        );
-    }
-
-    .statement
-    {
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .statement-mark
-    {
-      margin-bottom: 30px;
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin: 26px 0 21px;
+      border: 1px solid #424249;
+      display: grid;
+      place-items: center;
       color: var(--yellow);
-      font: 60px monospace;
-      line-height: .6;
+      font: 18px monospace;
     }
 
-    .statement h2
-    {
+    .feature h3 {
+      margin: 0 0 9px;
+      font: 19px monospace;
+    }
+
+    .feature p {
       margin: 0;
-      font: clamp(34px,5vw,67px)/1.08 monospace;
-      letter-spacing: -3px;
-    }
-
-    .statement h2 span
-    {
-      color: var(--yellow);
-    }
-
-    .statement p
-    {
-      max-width: 650px;
-      margin: 27px auto 0;
-      color: #898991;
-      font-size: 16px;
+      max-width: 330px;
+      color: var(--muted);
+      font-size: 13px;
       line-height: 1.7;
     }
 
-    /* ============================================================
-       FAQ
-       ============================================================ */
+    /* STATS */
 
-    .faq
-    {
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat {
+      min-height: 150px;
+      padding: 28px;
+      background: #090909;
+    }
+
+    .stat-number {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--yellow);
+      font: 900 34px monospace;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* FAQ */
+
+    .faq-section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq {
       max-width: 900px;
       margin: 0 auto;
     }
 
-    .faq-item
-    {
-      border-top: 1px solid #36363d;
+    .faq-item {
+      border-top: 1px solid var(--border);
     }
 
-    .faq-item:last-child
-    {
-      border-bottom: 1px solid #36363d;
+    .faq-item:last-child {
+      border-bottom: 1px solid var(--border);
     }
 
-    .faq-question
-    {
+    .faq-question {
       width: 100%;
-      padding: 25px 0;
+      padding: 22px 0;
       border: 0;
       background: transparent;
-      color: #ffffff;
+      color: white;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       text-align: left;
       cursor: pointer;
-      font: 17px monospace;
+      font: 15px monospace;
     }
 
-    .faq-plus
-    {
+    .faq-plus {
       width: 30px;
       height: 30px;
-      border: 1px solid #44444b;
+      border: 1px solid var(--border-light);
       display: grid;
       place-items: center;
       color: var(--yellow);
-      transition:
-        transform .25s ease,
-        background .25s ease;
+      transition: transform .25s ease;
     }
 
-    .faq-item.open .faq-plus
-    {
+    .faq-item.open .faq-plus {
       transform: rotate(45deg);
-      background: #18180d;
     }
 
-    .faq-answer
-    {
+    .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition:
-        max-height .35s ease;
+      transition: max-height .3s ease;
     }
 
-    .faq-answer-inner
-    {
-      padding: 0 55px 25px 0;
-      color: #85858e;
-      font-size: 14px;
+    .faq-answer-inner {
+      padding: 0 50px 22px 0;
+      color: var(--muted);
+      font-size: 13px;
       line-height: 1.7;
     }
 
-    /* ============================================================
-       FINAL CTA
-       ============================================================ */
+    /* CTA */
 
-    .final-cta
-    {
-      position: relative;
-      padding: 120px 0;
+    .cta {
+      padding: 100px 0;
       background: var(--yellow);
-      color: #111111;
+      color: #111;
+      text-align: center;
+      position: relative;
       overflow: hidden;
     }
 
-    .final-cta::before
-    {
+    .cta::after {
       content: "</>";
       position: absolute;
       right: -30px;
-      bottom: -100px;
-      font: 300px monospace;
+      bottom: -110px;
+      font: 280px/1 monospace;
       font-weight: 900;
-      color: rgba(17,17,17,.08);
+      color: rgba(0,0,0,.07);
       pointer-events: none;
     }
 
-    .cta-inner
-    {
+    .cta-content {
       position: relative;
       z-index: 2;
-      text-align: center;
     }
 
-    .cta-inner h2
-    {
+    .cta h2 {
       margin: 0;
-      font: clamp(43px,6vw,76px)/1 monospace;
+      font: 900 clamp(38px,6vw,68px)/1 monospace;
       letter-spacing: -4px;
     }
 
-    .cta-inner p
-    {
-      max-width: 620px;
-      margin: 22px auto 32px;
-      font-size: 17px;
-      line-height: 1.6;
-    }
-
-    .cta-button
-    {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 28px;
-      border: 2px solid #111111;
-      background: #111111;
-      color: #ffffff;
-      font-weight: 900;
-      cursor: pointer;
-      transition:
-        transform .2s var(--ease),
-        background .2s ease;
-    }
-
-    .cta-button:hover
-    {
-      transform: translateY(-3px);
-      background: #2b2b2b;
-    }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-
-    .footer
-    {
-      background: #050505;
-      padding: 75px 0 35px;
-    }
-
-    .footer-top
-    {
-      display: grid;
-      grid-template-columns:
-        1.5fr
-        repeat(4,1fr);
-      gap: 45px;
-      padding-bottom: 65px;
-    }
-
-    .footer-brand
-    {
-      max-width: 300px;
-    }
-
-    .footer-brand .brand
-    {
-      margin-bottom: 20px;
-    }
-
-    .footer-brand p
-    {
-      color: #777780;
-      font-size: 13px;
+    .cta p {
+      max-width: 580px;
+      margin: 18px auto 28px;
+      font-size: 15px;
       line-height: 1.7;
     }
 
-    .footer-column h4
-    {
-      margin: 0 0 18px;
-      color: #ffffff;
-      font: 12px monospace;
-      text-transform: uppercase;
+    .cta-button {
+      min-height: 50px;
+      padding: 0 26px;
+      border: 2px solid #111;
+      background: #111;
+      color: white;
+      cursor: pointer;
+      font-weight: 900;
+      transition: .2s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      background: #292929;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 60px 0 25px;
+      background: var(--bg);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+      gap: 45px;
+      padding-bottom: 50px;
+    }
+
+    .footer-description {
+      max-width: 300px;
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .footer-column h4 {
+      margin: 0 0 15px;
+      font: 11px monospace;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .footer-column a
-    {
+    .footer-column a {
       display: block;
-      margin: 11px 0;
-      color: #777780;
-      font-size: 13px;
-      transition:
-        color .2s ease;
+      margin: 9px 0;
+      color: var(--muted-2);
+      font-size: 12px;
+      transition: color .2s ease;
     }
 
-    .footer-column a:hover
-    {
+    .footer-column a:hover {
       color: var(--yellow);
     }
 
-    .footer-bottom
-    {
+    .footer-bottom {
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
       display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding-top: 25px;
-      border-top: 1px solid #29292f;
-      color: #5e5e66;
+      color: #55555d;
       font: 10px monospace;
     }
 
-    .footer-status
-    {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* SEARCH */
 
-    .footer-status-dot
-    {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-    }
-
-    /* ============================================================
-       SEARCH OVERLAY
-       ============================================================ */
-
-    .search-overlay
-    {
+    .search-overlay {
       position: fixed;
       inset: 0;
-      z-index: 200;
+      z-index: 300;
       display: flex;
-      align-items: flex-start;
       justify-content: center;
-      padding-top: 120px;
-      background: rgba(0,0,0,.76);
+      align-items: flex-start;
+      padding-top: 110px;
+      background: rgba(0,0,0,.75);
       backdrop-filter: blur(12px);
       opacity: 0;
       visibility: hidden;
-      transition:
-        opacity .25s ease,
-        visibility .25s ease;
+      transition: opacity .2s ease, visibility .2s ease;
     }
 
-    .search-overlay.open
-    {
+    .search-overlay.open {
       opacity: 1;
       visibility: visible;
     }
 
-    .search-box
-    {
-      width: min(
-        calc(100% - 40px),
-        720px
-      );
-      border: 1px solid #55555d;
-      background: #101014;
-      box-shadow: 0 35px 100px rgba(0,0,0,.55);
+    .search-box {
+      width: min(calc(100% - 32px), 700px);
+      border: 1px solid #494950;
+      background: #101013;
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
     }
 
-    .search-top
-    {
+    .search-row {
       display: flex;
       align-items: center;
-      gap: 15px;
-      padding: 18px;
-      border-bottom: 1px solid #303038;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .search-input
-    {
+    .search-input {
       flex: 1;
       min-width: 0;
       border: 0;
       outline: 0;
       background: transparent;
-      color: #ffffff;
-      font: 16px monospace;
+      color: white;
+      font: 14px monospace;
     }
 
-    .search-input::placeholder
-    {
+    .search-input::placeholder {
       color: #55555d;
     }
 
-    .search-close
-    {
-      width: 35px;
-      height: 35px;
-      border: 1px solid #45454c;
+    .search-close {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border-light);
       background: transparent;
-      color: #ffffff;
+      color: white;
       cursor: pointer;
     }
 
-    .search-results
-    {
-      padding: 10px;
+    .search-results {
+      padding: 8px;
     }
 
-    .search-result
-    {
+    .search-result {
       display: block;
-      padding: 16px;
-      color: #bdbdc5;
-      font-size: 13px;
-      transition:
-        background .2s ease,
-        color .2s ease;
+      padding: 13px;
+      color: #b9b9c1;
+      font-size: 12px;
+      transition: .2s ease;
     }
 
-    .search-result:hover
-    {
-      background: #19191f;
+    .search-result:hover {
+      background: #19191e;
       color: var(--yellow);
     }
 
-    /* ============================================================
-       SCROLL REVEAL
-       ============================================================ */
+    /* REVEAL */
 
-    .reveal
-    {
+    .reveal {
       opacity: 0;
-      transform: translateY(25px);
-      transition:
-        opacity .7s var(--ease),
-        transform .7s var(--ease);
+      transform: translateY(20px);
+      transition: opacity .65s var(--ease), transform .65s var(--ease);
     }
 
-    .reveal.visible
-    {
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
+    /* MOBILE */
 
-    @media (max-width: 1200px)
-    {
-      .hero-inner
-      {
+    @media (max-width: 1100px) {
+      .hero-inner {
         grid-template-columns: 1fr;
-        gap: 65px;
       }
 
-      .hero-copy
-      {
-        max-width: 800px;
-      }
-
-      .hero-graphic
-      {
-        max-width: 720px;
-        margin: 0 auto;
+      .hero-editor {
+        max-width: 650px;
         width: 100%;
+        margin: auto;
       }
 
-      .learning-layout
-      {
-        gap: 50px;
-      }
-
-      .footer-top
-      {
-        grid-template-columns:
-          1.5fr
-          repeat(2,1fr);
+      .paths-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 950px)
-    {
-      .nav-links
-      {
+    @media (max-width: 850px) {
+      .nav-links {
         display: none;
       }
 
-      .mobile-menu
-      {
+      .mobile-button {
         display: grid;
-        place-items: center;
       }
 
-      .nav-actions
-      {
-        margin-left: auto;
+      .nav.mobile-open .nav-links {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        top: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px;
+        border: 1px solid var(--border-light);
+        background: #0b0b0e;
+        box-shadow: 0 25px 60px rgba(0,0,0,.5);
       }
 
-      .learning-layout,
-      .practice-layout
-      {
+      .nav.mobile-open .nav-link {
+        padding: 14px;
+      }
+
+      .nav.mobile-open .nav-link.active::after {
+        display: none;
+      }
+
+      .feature-grid {
         grid-template-columns: 1fr;
       }
 
-      .learning-copy
-      {
-        max-width: 800px;
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .feature-grid
-      {
-        grid-template-columns: 1fr;
+      .footer-top {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .paths-grid
-      {
-        grid-template-columns: 1fr;
-      }
-
-      .stats
-      {
-        grid-template-columns:
-          repeat(2,1fr);
-      }
-
-      .ide-showcase
-      {
-        max-width: 800px;
+      .footer-brand {
+        grid-column: 1 / -1;
       }
     }
 
-    @media (max-width: 700px)
-    {
+    @media (max-width: 600px) {
       .container,
       .nav-inner,
-      .hero-inner
-      {
-        width: min(
-          calc(100% - 36px),
-          var(--max)
-        );
+      .hero-inner {
+        width: min(calc(100% - 30px), var(--max));
       }
 
-      .promo
-      {
-        min-height: 52px;
+      .nav {
+        height: 64px;
       }
 
-      .promo-content
-      {
-        gap: 10px;
+      .nav-inner {
+        gap: 12px;
       }
 
-      .promo-label
-      {
-        font-size: 11px;
-      }
-
-      .site-nav
-      {
-        height: 67px;
-      }
-
-      .nav-inner
-      {
-        gap: 15px;
-      }
-
-      .brand
-      {
-        font-size: 19px;
-      }
-
-      .nav-button
-      {
+      .start-button {
         display: none;
       }
 
-      .hero
-      {
-        min-height: auto;
+      .hero-inner {
+        padding: 65px 0 80px;
       }
 
-      .hero-inner
-      {
-        padding: 70px 0 80px;
-      }
-
-      .hero-title
-      {
-        font-size: 49px;
+      .hero-title {
+        font-size: 48px;
         letter-spacing: -4px;
       }
 
-      .hero-description
-      {
-        font-size: 16px;
-      }
-
-      .hero-graphic
-      {
-        min-height: 400px;
-      }
-
-      .code-window
-      {
-        box-shadow:
-          12px 12px 0 rgba(255,217,0,.9);
-      }
-
-      .floating-terminal
-      {
-        display: none;
-      }
-
-      .floating-progress
-      {
-        left: 0;
-        bottom: 5px;
-      }
-
-      .graphic-back-square,
-      .graphic-back-square-two
-      {
-        display: none;
-      }
-
-      .trust-inner
-      {
-        padding: 24px 0;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .trust-items
-      {
-        justify-content: flex-start;
-        gap: 15px 25px;
-      }
-
-      .section
-      {
-        padding: 80px 0;
-      }
-
-      .section-title
-      {
-        font-size: 39px;
-        letter-spacing: -2px;
-      }
-
-      .section-description
-      {
+      .hero-description {
         font-size: 15px;
       }
 
-      .ide-content
-      {
-        grid-template-columns: 120px 1fr;
+      .hero-editor {
+        min-height: 390px;
       }
 
-      .ide-code
-      {
-        overflow: hidden;
-        font-size: 10px;
+      .editor-window {
+        box-shadow: 10px 10px 0 rgba(255,217,0,.8);
       }
 
-      .stats
-      {
+      .floating-progress {
+        left: 0;
+        bottom: 0;
+      }
+
+      .dashboard-inner,
+      .paths,
+      .features,
+      .faq-section,
+      .cta {
+        padding: 75px 0;
+      }
+
+      .continue {
         grid-template-columns: 1fr;
       }
 
-      .timeline::before
-      {
-        left: 10px;
-      }
-
-      .timeline-item,
-      .timeline-item:nth-child(even)
-      {
-        width: 100%;
-        margin-left: 0;
-        padding:
-          0 0 55px 42px;
-        text-align: left;
-      }
-
-      .timeline-item:nth-child(odd) .timeline-dot,
-      .timeline-item:nth-child(even) .timeline-dot
-      {
-        left: 4px;
-        right: auto;
-      }
-
-      .footer-top
-      {
-        grid-template-columns:
-          repeat(2,1fr);
-      }
-
-      .footer-brand
-      {
-        grid-column: 1 / -1;
-      }
-
-      .footer-bottom
-      {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .statement-section
-      {
-        padding: 100px 0;
-      }
-
-      .statement h2
-      {
-        font-size: 39px;
-      }
-    }
-
-    @media (max-width: 450px)
-    {
-      .hero-actions
-      {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button-primary,
-      .button-outline
-      {
-        width: 100%;
-      }
-
-      .code-body
-      {
-        padding: 20px 15px;
-        font-size: 11px;
-      }
-
-      .line-number
-      {
-        width: 25px;
-      }
-
-      .floating-progress
-      {
-        width: 175px;
-      }
-
-      .footer-top
-      {
+      .paths-grid {
         grid-template-columns: 1fr;
       }
 
-      .footer-brand
-      {
-        grid-column: auto;
+      .stats {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .practice-floating
-      {
-        display: none;
-      }
-    }
-
-    /* ============================================================
-       REDUCED MOTION
-       ============================================================ */
-
-    @media (prefers-reduced-motion: reduce)
-    {
-      html
-      {
-        scroll-behavior: auto;
+      .stat {
+        min-height: 125px;
+        padding: 20px;
       }
 
-      *,
-      *::before,
-      *::after
-      {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
+      .stat-number {
+        font-size: 28px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
       }
     }
-
   </style>
+
 </head>
 
 <body>
 
-  <div class="page">
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="CodeLearn home">
+        <span class="brand-mark">&lt;/&gt;</span>
+        <span>Code<span class="brand-accent">Learn</span></span>
+      </a>
 
-    <!-- ==========================================================
-         PROMO
-         ========================================================== -->
+```
+  <div class="nav-links">
+    <a class="nav-link active" href="index.html">Home</a>
+    <a class="nav-link" href="lesson.html">Lessons</a>
+    <a class="nav-link" href="practice.html">Practice</a>
+    <a class="nav-link" href="challenges.html">Challenges</a>
+    <a class="nav-link" href="progress.html">Progress</a>
+  </div>
 
-    <div class="promo">
+  <div class="nav-actions">
+    <button class="search-button" id="searchButton" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-4-4"></path>
+      </svg>
+    </button>
 
-      <div class="promo-content">
+    <button class="start-button" id="navStart">Start Learning</button>
 
-        <div class="promo-label">
-          LEARN TO CODE BY ACTUALLY CODING.
+    <button class="mobile-button" id="mobileButton" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+```
+
+  </nav>
+
+  <main>
+
+```
+<section class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="eyebrow">
+        <span class="eyebrow-line"></span>
+        Developer learning platform
+      </div>
+
+      <h1 class="hero-title">
+        Learn to<br>
+        <span class="accent">build.</span><br>
+        <span class="purple">For real.</span>
+      </h1>
+
+      <p class="hero-description">
+        Learn programming through interactive lessons, real code,
+        guided practice, challenges, and projects. No passive tutorials.
+        Write the code yourself.
+      </p>
+
+      <div class="hero-actions">
+        <a class="primary" href="lesson.html">Start Learning</a>
+        <a class="secondary" href="challenges.html">Explore Challenges</a>
+      </div>
+
+      <div class="hero-meta">
+        <span class="meta-item">
+          <span class="status-dot"></span>
+          Interactive learning
+        </span>
+        <span class="meta-item">JavaScript</span>
+        <span class="meta-item">HTML</span>
+        <span class="meta-item">CSS</span>
+      </div>
+    </div>
+
+    <div class="hero-editor reveal">
+      <div class="editor-glow"></div>
+
+      <div class="editor-window">
+        <div class="editor-top">
+          <span class="editor-dot"></span>
+          <span class="editor-dot"></span>
+          <span class="editor-dot"></span>
+          <span class="editor-file">lesson.js</span>
         </div>
 
-        <button
-          class="promo-button"
-          type="button"
-          onclick="goToLesson()"
-        >
-          Start learning
-        </button>
+        <div class="editor-code">
+          <div class="code-line">
+            <span class="line-number">01</span>
+            <span class="gray-text">// your first program</span>
+          </div>
 
+          <div class="code-line">
+            <span class="line-number">02</span>
+            <span class="purple-text">const</span>&nbsp;
+            <span class="blue-text">message</span>
+            &nbsp;=&nbsp;
+            <span class="yellow-text">"Hello, world!"</span>;
+          </div>
+
+          <div class="code-line">
+            <span class="line-number">03</span>
+            <span class="green-text">console</span>.
+            <span class="blue-text">log</span>(
+            <span class="blue-text">message</span>);
+          </div>
+
+          <div class="code-line">
+            <span class="line-number">04</span>
+            &nbsp;
+          </div>
+
+          <div class="code-line">
+            <span class="line-number">05</span>
+            <span class="gray-text">// change it. run it. learn it.</span>
+          </div>
+
+          <div class="code-line">
+            <span class="line-number">06</span>
+            <span class="purple-text">let</span>
+            &nbsp;<span class="blue-text">level</span> = 1;
+            <span class="cursor"></span>
+          </div>
+        </div>
+
+        <div class="editor-bottom">
+          <span class="editor-status">
+            <span class="status-dot"></span>
+            Ready
+          </span>
+          <span>JavaScript</span>
+        </div>
+      </div>
+
+      <div class="floating-progress">
+        <div class="floating-header">
+          <span>Your progress</span>
+          <span class="floating-value" id="heroProgress">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="heroProgressBar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard">
+  <div class="container dashboard-inner reveal">
+    <div class="dashboard-header">
+      <div>
+        <div class="section-label">Your workspace</div>
+        <h2 class="section-title">Continue learning</h2>
+      </div>
+      <a class="view-link" href="progress.html">VIEW PROGRESS →</a>
+    </div>
+
+    <div class="continue">
+      <div>
+        <div class="continue-kicker">Next lesson</div>
+        <h3 class="continue-title" id="continueTitle">JavaScript Fundamentals</h3>
+        <p class="continue-description" id="continueDescription">
+          Start with the fundamentals and build your programming foundation.
+        </p>
+
+        <div class="continue-progress">
+          <div class="progress-track">
+            <div class="progress-fill" id="continueBar"></div>
+          </div>
+          <span class="continue-percent" id="continuePercent">0%</span>
+        </div>
+      </div>
+
+      <a class="primary" href="lesson.html">Continue</a>
+    </div>
+  </div>
+</section>
+
+<section class="paths">
+  <div class="container">
+    <div class="paths-header reveal">
+      <div class="section-label">Learning paths</div>
+      <h2 class="section-title">Choose your path.</h2>
+      <p class="paths-description">
+        Follow structured lessons from the basics to real projects.
+        Your progress is saved locally as you learn.
+      </p>
+    </div>
+
+    <div class="paths-grid">
+
+      <article class="path reveal" data-path="js">
+        <div class="path-tag">01 / JAVASCRIPT</div>
+        <div class="path-icon">{ }</div>
+        <h3>JavaScript Fundamentals</h3>
+        <p>
+          Variables, values, functions, conditions, loops, arrays,
+          objects, and the fundamentals behind modern JavaScript.
+        </p>
+
+        <div class="path-progress-row">
+          <div class="path-progress-top">
+            <span>Progress</span>
+            <span class="path-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="path-lessons">0 / 10 lessons</div>
+        </div>
+      </article>
+
+      <article class="path reveal" data-path="web">
+        <div class="path-tag">02 / WEB</div>
+        <div class="path-icon">&lt;/&gt;</div>
+        <h3>Web Development</h3>
+        <p>
+          Build websites with HTML and CSS, then connect them with
+          JavaScript to create real interactive experiences.
+        </p>
+
+        <div class="path-progress-row">
+          <div class="path-progress-top">
+            <span>Progress</span>
+            <span class="path-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="path-lessons">0 / 8 lessons</div>
+        </div>
+      </article>
+
+      <article class="path reveal" data-path="interactive">
+        <div class="path-tag">03 / INTERACTIVE</div>
+        <div class="path-icon">JS</div>
+        <h3>Interactive JavaScript</h3>
+        <p>
+          Learn how code responds to users, controls pages, handles
+          events, and turns simple websites into applications.
+        </p>
+
+        <div class="path-progress-row">
+          <div class="path-progress-top">
+            <span>Progress</span>
+            <span class="path-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="path-lessons">0 / 8 lessons</div>
+        </div>
+      </article>
+
+      <article class="path reveal" data-path="projects">
+        <div class="path-tag">04 / PROJECTS</div>
+        <div class="path-icon">+</div>
+        <h3>Build Projects</h3>
+        <p>
+          Put everything together by building useful projects while
+          practicing the skills you have learned.
+        </p>
+
+        <div class="path-progress-row">
+          <div class="path-progress-top">
+            <span>Progress</span>
+            <span class="path-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="path-lessons">0 / 6 projects</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="paths-header reveal">
+      <div class="section-label">The CodeLearn method</div>
+      <h2 class="section-title">Don't just watch code.</h2>
+      <p class="paths-description">
+        CodeLearn is designed around doing the work yourself.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+
+      <article class="feature reveal">
+        <div class="feature-number">01</div>
+        <div class="feature-icon">&gt;_</div>
+        <h3>Write real code</h3>
+        <p>
+          Every lesson gives you code to type, change, test, and
+          understand instead of simply watching someone else write it.
+        </p>
+      </article>
+
+      <article class="feature reveal">
+        <div class="feature-number">02</div>
+        <div class="feature-icon">→</div>
+        <h3>Guided learning</h3>
+        <p>
+          When you get stuck, the lesson can point you toward the exact
+          part of the code you need to work on.
+        </p>
+      </article>
+
+      <article class="feature reveal">
+        <div class="feature-number">03</div>
+        <div class="feature-icon">✓</div>
+        <h3>Practice immediately</h3>
+        <p>
+          Complete challenges and practice problems so each new concept
+          becomes something you can actually use.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="stats reveal">
+    <div class="stat">
+      <span class="stat-number" id="statLessons">0</span>
+      <span class="stat-label">Lessons completed</span>
+    </div>
+
+    <div class="stat">
+      <span class="stat-number" id="statChallenges">0</span>
+      <span class="stat-label">Challenges solved</span>
+    </div>
+
+    <div class="stat">
+      <span class="stat-number" id="statXP">0</span>
+      <span class="stat-label">Practice XP</span>
+    </div>
+
+    <div class="stat">
+      <span class="stat-number" id="statStreak">0</span>
+      <span class="stat-label">Day streak</span>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="container">
+    <div class="paths-header reveal">
+      <div class="section-label">Questions</div>
+      <h2 class="section-title">How CodeLearn works.</h2>
+    </div>
+
+    <div class="faq reveal">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Do I need coding experience?
+          <span class="faq-plus">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            No. The learning paths are designed to start with fundamentals
+            and gradually introduce more advanced concepts.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Does CodeLearn save my progress?
+          <span class="faq-plus">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes. CodeLearn stores your learning progress in your browser
+            so completed lessons, challenges, XP, and other activity can
+            appear across the learning pages.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What can I learn?
+          <span class="faq-plus">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            CodeLearn currently focuses on JavaScript, web development,
+            interactive JavaScript, practice challenges, and projects.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What happens when I get stuck?
+          <span class="faq-plus">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lessons can provide guided help, including a way to show you
+            where the next piece of code belongs.
+          </div>
+        </div>
       </div>
 
     </div>
-
-
-    <!-- ==========================================================
-         NAVIGATION
-         ========================================================== -->
-
-    <header class="site-nav">
-
-      <div class="nav-inner">
-
-        <a
-          class="brand"
-          href="index.html"
-          aria-label="CodeLearn home"
-        >
-
-          <span class="brand-box">
-            code
-          </span>
-
-          <span class="brand-learn">
-            learn
-          </span>
-
-        </a>
-
-
-        <nav
-          class="nav-links"
-          aria-label="Main navigation"
-        >
-
-          <a
-            class="nav-link"
-            href="#paths"
-          >
-            Catalog
-          </a>
-
-          <a
-            class="nav-link"
-            href="lesson.html"
-          >
-            Learn
-          </a>
-
-          <a
-            class="nav-link"
-            href="practice.html"
-          >
-            Practice
-          </a>
-
-          <a
-            class="nav-link"
-            href="challenges.html"
-          >
-            Challenges
-          </a>
-
-          <a
-            class="nav-link"
-            href="progress.html"
-          >
-            Progress
-          </a>
-
-        </nav>
-
-
-        <div class="nav-actions">
-
-          <button
-            class="nav-search"
-            id="openSearch"
-            type="button"
-            aria-label="Search"
-          >
-
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-
-              <circle
-                cx="11"
-                cy="11"
-                r="6"
-              />
-
-              <path
-                d="M16 16L21 21"
-              />
-
-            </svg>
-
-          </button>
-
-
-          <button
-            class="nav-button"
-            type="button"
-            onclick="goToLesson()"
-          >
-            Start Learning
-          </button>
-
-
-          <button
-            class="mobile-menu"
-            id="mobileMenu"
-            type="button"
-            aria-label="Open menu"
-          >
-
-            <svg
-              width="19"
-              height="19"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-
-              <path d="M4 7H20"></path>
-
-              <path d="M4 12H20"></path>
-
-              <path d="M4 17H20"></path>
-
-            </svg>
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </header>
-
-
-    <!-- ==========================================================
-         HERO
-         ========================================================== -->
-
-    <main>
-
-      <section class="hero">
-
-        <div class="hero-grid"></div>
-
-        <div class="hero-glow"></div>
-
-
-        <div class="hero-inner">
-
-          <div class="hero-copy reveal">
-
-            <div class="eyebrow">
-
-              <span class="eyebrow-line"></span>
-
-              THE CODELEARN EXPERIENCE
-
-            </div>
-
-
-            <h1 class="hero-title">
-
-              Develop your
-
-              <br>
-
-              <span class="yellow">
-                coding
-              </span>
-
-              <br>
-
-              <span class="purple">
-                skills.
-              </span>
-
-            </h1>
-
-
-            <p class="hero-description">
-
-              Learn programming through interactive lessons,
-              real code, guided practice, and challenges designed
-              to help you actually understand what you're building.
-
-            </p>
-
-
-            <div class="hero-actions">
-
-              <button
-                class="button-primary"
-                type="button"
-                onclick="goToLesson()"
-              >
-
-                Start Learning
-
-                <svg
-                  width="17"
-                  height="17"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                >
-
-                  <path d="M5 12H19"></path>
-
-                  <path d="M13 6L19 12L13 18"></path>
-
-                </svg>
-
-              </button>
-
-
-              <button
-                class="button-outline"
-                type="button"
-                onclick="scrollToPaths()"
-              >
-                Explore Lessons
-              </button>
-
-            </div>
-
-
-            <div class="hero-meta">
-
-              <div class="hero-meta-item">
-
-                <span class="meta-dot"></span>
-
-                No account required
-
-              </div>
-
-
-              <div class="hero-meta-item">
-
-                <span class="meta-dot"></span>
-
-                Interactive lessons
-
-              </div>
-
-
-              <div class="hero-meta-item">
-
-                <span class="meta-dot"></span>
-
-                Learn at your pace
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- ====================================================
-               HERO GRAPHIC
-               ==================================================== -->
-
-          <div class="hero-graphic reveal">
-
-            <div class="graphic-back-square"></div>
-
-            <div class="graphic-back-square-two"></div>
-
-
-            <div class="code-window">
-
-              <div class="window-header">
-
-                <span class="window-dot"></span>
-
-                <span class="window-dot"></span>
-
-                <span class="window-dot"></span>
-
-                <div class="window-title">
-                  index.html
-                </div>
-
-              </div>
-
-
-              <div class="code-body">
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    01
-                  </span>
-
-                  <span>
-                    <span class="code-symbol">
-                      &lt;
-                    </span>
-
-                    <span class="code-keyword">
-                      html
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    02
-                  </span>
-
-                  <span>
-                    &nbsp;&nbsp;
-
-                    <span class="code-symbol">
-                      &lt;
-                    </span>
-
-                    <span class="code-keyword">
-                      body
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    03
-                  </span>
-
-                  <span>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <span class="code-symbol">
-                      &lt;
-                    </span>
-
-                    <span class="code-keyword">
-                      h1
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-
-                    <span class="code-string">
-                      Hello!
-                    </span>
-
-                    <span class="code-symbol">
-                      &lt;/
-                    </span>
-
-                    <span class="code-keyword">
-                      h1
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    04
-                  </span>
-
-                  <span>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <span class="code-symbol">
-                      &lt;
-                    </span>
-
-                    <span class="code-keyword">
-                      p
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-
-                    <span class="code-string">
-                      Build something.
-                    </span>
-
-                    <span class="code-symbol">
-                      &lt;/
-                    </span>
-
-                    <span class="code-keyword">
-                      p
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    05
-                  </span>
-
-                  <span>
-                    &nbsp;&nbsp;
-
-                    <span class="code-symbol">
-                      &lt;/
-                    </span>
-
-                    <span class="code-keyword">
-                      body
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    06
-                  </span>
-
-                  <span>
-
-                    <span class="code-symbol">
-                      &lt;/
-                    </span>
-
-                    <span class="code-keyword">
-                      html
-                    </span>
-
-                    <span class="code-symbol">
-                      &gt;
-                    </span>
-
-                    <span class="code-cursor"></span>
-
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    07
-                  </span>
-
-                  <span class="code-comment">
-                    // keep learning
-                  </span>
-
-                </div>
-
-
-                <div class="code-line">
-
-                  <span class="line-number">
-                    08
-                  </span>
-
-                  <span>
-
-                    <span class="code-keyword">
-                      const
-                    </span>
-
-                    <span class="code-variable">
-                      future
-                    </span>
-
-                    <span class="code-symbol">
-                      =
-                    </span>
-
-                    <span class="code-string">
-                      "yours";
-                    </span>
-
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              <div class="window-footer">
-
-                <div class="window-status">
-
-                  <span class="status-green"></span>
-
-                  CodeLearn ready
-
-                </div>
-
-                <span>
-                  HTML
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <div class="floating-card floating-progress">
-
-              <div class="floating-progress-label">
-
-                <span>
-                  YOUR PROGRESS
-                </span>
-
-                <span class="floating-progress-value">
-                  72%
-                </span>
-
-              </div>
-
-              <div class="progress-track">
-
-                <div class="progress-fill"></div>
-
-              </div>
-
-            </div>
-
-
-            <div class="floating-card floating-terminal">
-
-              <div class="terminal-label">
-                TERMINAL
-              </div>
-
-              <div class="terminal-command">
-
-                <span>
-                  $
-                </span>
-
-                codelearn
-
-              </div>
-
-              <div class="terminal-command">
-
-                <span>
-                  >
-                </span>
-
-                lesson.start()
-
-              </div>
-
-              <div class="terminal-command">
-
-                <span>
-                  ✓
-                </span>
-
-                ready
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           TRUST STRIP
-           ======================================================== -->
-
-      <section class="trust-strip">
-
-        <div class="container trust-inner">
-
-          <div class="trust-text">
-            BUILT AROUND REAL CODING
-          </div>
-
-          <div class="trust-items">
-
-            <span class="trust-item">
-              HTML
-            </span>
-
-            <span class="trust-item">
-              CSS
-            </span>
-
-            <span class="trust-item">
-              JAVASCRIPT
-            </span>
-
-            <span class="trust-item">
-              LOGIC
-            </span>
-
-            <span class="trust-item">
-              PROJECTS
-            </span>
-
-            <span class="trust-item">
-              CHALLENGES
-            </span>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           LEARNING EXPERIENCE
-           ======================================================== -->
-
-      <section class="section section-dark">
-
-        <div class="container">
-
-          <div class="learning-layout">
-
-            <div class="learning-copy reveal">
-
-              <div class="section-kicker">
-                HOW IT WORKS
-              </div>
-
-              <h2 class="section-title">
-                Learn by doing.
-              </h2>
-
-              <p class="section-description">
-
-                CodeLearn doesn't just show you code.
-                It gives you a place to write it, test it,
-                fix it, and understand why it works.
-
-              </p>
-
-
-              <div class="learning-list">
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    01
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Read the lesson
-                    </h3>
-
-                    <p>
-                      Understand one concept at a time without
-                      getting buried in information.
-                    </p>
-
-                  </div>
-
-                </div>
-
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    02
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      See an example
-                    </h3>
-
-                    <p>
-                      A working example stays visible while you
-                      practice the concept yourself.
-                    </p>
-
-                  </div>
-
-                </div>
-
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    03
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Write the code
-                    </h3>
-
-                    <p>
-                      Type directly into the interactive editor
-                      and build the answer yourself.
-                    </p>
-
-                  </div>
-
-                </div>
-
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    04
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Get feedback
-                    </h3>
-
-                    <p>
-                      CodeLearn checks your answer and helps you
-                      find the next thing to fix.
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- ==================================================
-                 IDE SHOWCASE
-                 ================================================== -->
-
-            <div class="ide-showcase reveal">
-
-              <div class="ide-window">
-
-                <div class="ide-top">
-
-                  <div class="ide-dots">
-
-                    <span class="ide-dot"></span>
-
-                    <span class="ide-dot"></span>
-
-                    <span class="ide-dot"></span>
-
-                  </div>
-
-                  <div class="ide-file">
-                    index.html
-                  </div>
-
-                </div>
-
-
-                <div class="ide-content">
-
-                  <div class="ide-sidebar">
-
-                    <div class="ide-side-label">
-                      WORKSPACE
-                    </div>
-
-                    <div class="ide-folder">
-                      ▾ project
-                    </div>
-
-                    <div class="ide-file-row active">
-                      index.html
-                    </div>
-
-                    <div class="ide-file-row">
-                      style.css
-                    </div>
-
-                    <div class="ide-file-row">
-                      script.js
-                    </div>
-
-                    <div class="ide-folder">
-                      ▸ assets
-                    </div>
-
-                  </div>
-
-
-                  <div class="ide-code">
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        1
-                      </span>
-
-                      <span class="ide-comment">
-                        &lt;!-- Start here --&gt;
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        2
-                      </span>
-
-                      <span>
-
-                        <span class="ide-purple">
-                          &lt;h1&gt;
-                        </span>
-
-                        <span class="ide-yellow">
-                          Hello!
-                        </span>
-
-                        <span class="ide-purple">
-                          &lt;/h1&gt;
-                        </span>
-
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        3
-                      </span>
-
-                      <span class="ide-comment">
-                        &nbsp;
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        4
-                      </span>
-
-                      <span>
-
-                        <span class="ide-key">
-                          &lt;p&gt;
-                        </span>
-
-                        Learn by building.
-
-                        <span class="ide-key">
-                          &lt;/p&gt;
-                        </span>
-
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        5
-                      </span>
-
-                      <span class="ide-comment">
-                        &nbsp;
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        6
-                      </span>
-
-                      <span>
-
-                        <span class="ide-key">
-                          &lt;button&gt;
-                        </span>
-
-                        <span class="ide-green">
-                          Start
-                        </span>
-
-                        <span class="ide-key">
-                          &lt;/button&gt;
-                        </span>
-
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        7
-                      </span>
-
-                      <span class="ide-comment">
-                        &nbsp;
-                      </span>
-
-                    </div>
-
-
-                    <div class="ide-line">
-
-                      <span class="ide-ln">
-                        8
-                      </span>
-
-                      <span>
-
-                        <span class="ide-key">
-                          &lt;/body&gt;
-                        </span>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-                <div class="ide-footer">
-
-                  <div class="ide-check">
-
-                    <span>
-                      ●
-                    </span>
-
-                    Code looks good
-
-                  </div>
-
-                  <span>
-                    8 lines
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           FEATURES
-           ======================================================== -->
-
-      <section class="section section-panel">
-
-        <div class="container">
-
-          <div class="section-heading reveal">
-
-            <div class="section-kicker">
-              THE PLATFORM
-            </div>
-
-            <h2 class="section-title">
-              Everything you need to learn.
-            </h2>
-
-            <p class="section-description">
-              A complete learning environment built around
-              practice instead of passive watching.
-            </p>
-
-          </div>
-
-
-          <div class="feature-grid">
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                01 / LESSONS
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M5 4H19V20H5Z"></path>
-
-                  <path d="M8 8H16"></path>
-
-                  <path d="M8 12H16"></path>
-
-                  <path d="M8 16H13"></path>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Interactive Lessons
-              </h3>
-
-              <p>
-                Learn one concept at a time with explanations,
-                examples, and coding tasks built into the lesson.
-              </p>
-
-            </article>
-
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                02 / PRACTICE
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M7 4H17"></path>
-
-                  <path d="M7 20H17"></path>
-
-                  <path d="M7 4L17 20"></path>
-
-                  <path d="M17 4L7 20"></path>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Hands-On Practice
-              </h3>
-
-              <p>
-                Reinforce every lesson with small exercises that
-                make you use the concept immediately.
-              </p>
-
-            </article>
-
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                03 / FEEDBACK
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M4 12L9 17L20 6"></path>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Instant Feedback
-              </h3>
-
-              <p>
-                Know when your code is correct and get guidance
-                when something needs to be changed.
-              </p>
-
-            </article>
-
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                04 / GUIDANCE
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M12 3V21"></path>
-
-                  <path d="M5 10L12 3L19 10"></path>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Built-In Guidance
-              </h3>
-
-              <p>
-                A visual guide can point directly at the place
-                where you need to type next.
-              </p>
-
-            </article>
-
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                05 / CHALLENGES
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M4 5H20"></path>
-
-                  <path d="M4 12H20"></path>
-
-                  <path d="M4 19H20"></path>
-
-                  <circle
-                    cx="8"
-                    cy="5"
-                    r="1.5"
-                  ></circle>
-
-                  <circle
-                    cx="15"
-                    cy="12"
-                    r="1.5"
-                  ></circle>
-
-                  <circle
-                    cx="10"
-                    cy="19"
-                    r="1.5"
-                  ></circle>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Coding Challenges
-              </h3>
-
-              <p>
-                Move beyond lessons and solve problems that
-                require you to remember what you've learned.
-              </p>
-
-            </article>
-
-
-            <article class="feature-card reveal">
-
-              <div class="feature-number">
-                06 / PROGRESS
-              </div>
-
-              <div class="feature-icon">
-
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-
-                  <path d="M4 19V5"></path>
-
-                  <path d="M4 19H20"></path>
-
-                  <path d="M7 15L11 11L14 13L20 6"></path>
-
-                </svg>
-
-              </div>
-
-              <h3>
-                Visible Progress
-              </h3>
-
-              <p>
-                See what you've completed and keep moving
-                through your learning path.
-              </p>
-
-            </article>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           LEARNING PATHS
-           ======================================================== -->
-
-      <section
-        class="section paths-section"
-        id="paths"
-      >
-
-        <div class="container">
-
-          <div class="section-heading reveal">
-
-            <div class="section-kicker">
-              LEARNING PATHS
-            </div>
-
-            <h2 class="section-title">
-              Choose your starting point.
-            </h2>
-
-            <p class="section-description">
-              Start with the fundamentals, then expand into
-              styling, programming, and larger projects.
-            </p>
-
-          </div>
-
-
-          <div class="paths-grid">
-
-            <!-- HTML -->
-
-            <a
-              class="path-card featured reveal"
-              href="lesson.html"
-            >
-
-              <div class="path-top">
-
-                <span class="path-tag">
-                  01 / HTML
-                </span>
-
-                <span class="path-level">
-                  BEGINNER
-                </span>
-
-              </div>
-
-
-              <div class="path-graphic">
-
-                <svg
-                  viewBox="0 0 500 180"
-                  preserveAspectRatio="none"
-                >
-
-                  <rect
-                    width="500"
-                    height="180"
-                    fill="#070708"
-                  />
-
-                  <path
-                    d="M0 140 L90 60 L170 125 L260 45 L350 105 L500 20"
-                    fill="none"
-                    stroke="#ffd900"
-                    stroke-width="2"
-                    opacity=".8"
-                  />
-
-                  <path
-                    d="M0 150 L90 70 L170 135 L260 55 L350 115 L500 30"
-                    fill="none"
-                    stroke="#7c45ff"
-                    stroke-width="1"
-                    opacity=".35"
-                  />
-
-                  <circle
-                    cx="90"
-                    cy="60"
-                    r="5"
-                    fill="#ffd900"
-                  />
-
-                  <circle
-                    cx="260"
-                    cy="45"
-                    r="5"
-                    fill="#ffd900"
-                  />
-
-                  <circle
-                    cx="500"
-                    cy="20"
-                    r="5"
-                    fill="#ffd900"
-                  />
-
-                  <text
-                    x="25"
-                    y="35"
-                    fill="#66666e"
-                    font-size="11"
-                    font-family="monospace"
-                  >
-                    &lt;html&gt;
-                  </text>
-
-                </svg>
-
-              </div>
-
-
-              <h3>
-                HTML Foundations
-              </h3>
-
-
-              <p>
-                Learn the structure behind webpages and create
-                your first real HTML documents.
-              </p>
-
-
-              <div class="path-bottom">
-
-                <span class="path-lessons">
-                  8 LESSONS
-                </span>
-
-                <span class="path-arrow">
-
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-
-                    <path d="M5 12H19"></path>
-
-                    <path d="M13 6L19 12L13 18"></path>
-
-                  </svg>
-
-                </span>
-
-              </div>
-
-            </a>
-
-
-            <!-- CSS -->
-
-            <a
-              class="path-card reveal"
-              href="practice.html"
-            >
-
-              <div class="path-top">
-
-                <span class="path-tag">
-                  02 / CSS
-                </span>
-
-                <span class="path-level">
-                  BEGINNER
-                </span>
-
-              </div>
-
-
-              <div class="path-graphic">
-
-                <svg
-                  viewBox="0 0 500 180"
-                  preserveAspectRatio="none"
-                >
-
-                  <rect
-                    width="500"
-                    height="180"
-                    fill="#070708"
-                  />
-
-                  <rect
-                    x="65"
-                    y="40"
-                    width="370"
-                    height="100"
-                    fill="none"
-                    stroke="#44444c"
-                  />
-
-                  <rect
-                    x="90"
-                    y="62"
-                    width="110"
-                    height="10"
-                    fill="#ffd900"
-                    opacity=".85"
-                  />
-
-                  <rect
-                    x="90"
-                    y="84"
-                    width="240"
-                    height="6"
-                    fill="#4b4b53"
-                  />
-
-                  <rect
-                    x="90"
-                    y="101"
-                    width="200"
-                    height="6"
-                    fill="#33333a"
-                  />
-
-                  <rect
-                    x="90"
-                    y="118"
-                    width="145"
-                    height="6"
-                    fill="#33333a"
-                  />
-
-                  <rect
-                    x="350"
-                    y="62"
-                    width="65"
-                    height="65"
-                    fill="#7c45ff"
-                    opacity=".4"
-                  />
-
-                </svg>
-
-              </div>
-
-
-              <h3>
-                CSS Foundations
-              </h3>
-
-
-              <p>
-                Learn selectors, properties, layouts, colors,
-                spacing, and how webpages become interfaces.
-              </p>
-
-
-              <div class="path-bottom">
-
-                <span class="path-lessons">
-                  10 LESSONS
-                </span>
-
-                <span class="path-arrow">
-
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-
-                    <path d="M5 12H19"></path>
-
-                    <path d="M13 6L19 12L13 18"></path>
-
-                  </svg>
-
-                </span>
-
-              </div>
-
-            </a>
-
-
-            <!-- JAVASCRIPT -->
-
-            <a
-              class="path-card reveal"
-              href="practice.html"
-            >
-
-              <div class="path-top">
-
-                <span class="path-tag">
-                  03 / JAVASCRIPT
-                </span>
-
-                <span class="path-level">
-                  BEGINNER
-                </span>
-
-              </div>
-
-
-              <div class="path-graphic">
-
-                <svg
-                  viewBox="0 0 500 180"
-                  preserveAspectRatio="none"
-                >
-
-                  <rect
-                    width="500"
-                    height="180"
-                    fill="#070708"
-                  />
-
-                  <text
-                    x="45"
-                    y="70"
-                    fill="#7c45ff"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    const
-                  </text>
-
-                  <text
-                    x="125"
-                    y="70"
-                    fill="#ffffff"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    score
-                  </text>
-
-                  <text
-                    x="185"
-                    y="70"
-                    fill="#777780"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    =
-                  </text>
-
-                  <text
-                    x="210"
-                    y="70"
-                    fill="#ffd900"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    100
-                  </text>
-
-                  <text
-                    x="45"
-                    y="105"
-                    fill="#7c45ff"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    if
-                  </text>
-
-                  <text
-                    x="75"
-                    y="105"
-                    fill="#ffffff"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    (score
-                  </text>
-
-                  <text
-                    x="145"
-                    y="105"
-                    fill="#ffd900"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    &gt;
-                  </text>
-
-                  <text
-                    x="165"
-                    y="105"
-                    fill="#ffd900"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    50
-                  </text>
-
-                  <text
-                    x="190"
-                    y="105"
-                    fill="#ffffff"
-                    font-size="18"
-                    font-family="monospace"
-                  >
-                    )
-                  </text>
-
-                  <path
-                    d="M350 35 L440 35 L440 145 L350 145 Z"
-                    fill="none"
-                    stroke="#65e39a"
-                    opacity=".6"
-                  />
-
-                  <path
-                    d="M370 115 L395 90 L410 105 L430 65"
-                    fill="none"
-                    stroke="#65e39a"
-                    stroke-width="3"
-                  />
-
-                </svg>
-
-              </div>
-
-
-              <h3>
-                JavaScript Basics
-              </h3>
-
-
-              <p>
-                Start programming with variables, functions,
-                conditions, events, and logic.
-              </p>
-
-
-              <div class="path-bottom">
-
-                <span class="path-lessons">
-                  12 LESSONS
-                </span>
-
-                <span class="path-arrow">
-
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-
-                    <path d="M5 12H19"></path>
-
-                    <path d="M13 6L19 12L13 18"></path>
-
-                  </svg>
-
-                </span>
-
-              </div>
-
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           CURRICULUM
-           ======================================================== -->
-
-      <section class="section section-dark">
-
-        <div class="container">
-
-          <div class="section-heading reveal">
-
-            <div class="section-kicker">
-              YOUR JOURNEY
-            </div>
-
-            <h2 class="section-title">
-              From first line to real projects.
-            </h2>
-
-            <p class="section-description">
-              The learning experience grows with you instead of
-              throwing everything at you on day one.
-            </p>
-
-          </div>
-
-
-          <div class="timeline">
-
-            <div class="timeline-item reveal">
-
-              <div class="timeline-dot"></div>
-
-              <div class="timeline-number">
-                PHASE 01
-              </div>
-
-              <h3>
-                Learn the fundamentals
-              </h3>
-
-              <p>
-                Understand the basic building blocks of code
-                and learn what each piece actually does.
-              </p>
-
-            </div>
-
-
-            <div class="timeline-item reveal">
-
-              <div class="timeline-dot"></div>
-
-              <div class="timeline-number">
-                PHASE 02
-              </div>
-
-              <h3>
-                Practice concepts
-              </h3>
-
-              <p>
-                Take the concepts from the lesson and use them
-                in short coding exercises.
-              </p>
-
-            </div>
-
-
-            <div class="timeline-item reveal">
-
-              <div class="timeline-dot"></div>
-
-              <div class="timeline-number">
-                PHASE 03
-              </div>
-
-              <h3>
-                Solve challenges
-              </h3>
-
-              <p>
-                Work without as much guidance and prove that
-                you can apply what you learned.
-              </p>
-
-            </div>
-
-
-            <div class="timeline-item reveal">
-
-              <div class="timeline-dot"></div>
-
-              <div class="timeline-number">
-                PHASE 04
-              </div>
-
-              <h3>
-                Build projects
-              </h3>
-
-              <p>
-                Combine your skills into webpages, interfaces,
-                experiments, and complete projects.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           PRACTICE
-           ======================================================== -->
-
-      <section class="section section-panel">
-
-        <div class="container">
-
-          <div class="practice-layout">
-
-            <div class="practice-visual reveal">
-
-              <div class="practice-screen">
-
-                <div class="practice-header">
-
-                  <span class="practice-title">
-                    challenge.html
-                  </span>
-
-                  <span class="practice-badge">
-                    READY
-                  </span>
-
-                </div>
-
-
-                <div class="practice-body">
-
-                  <div class="practice-question">
-
-                    Build an HTML heading that says:
-
-                    <br>
-
-                    <span style="color:#ffd900;">
-                      Hello, world!
-                    </span>
-
-                  </div>
-
-
-                  <div class="practice-editor">
-
-                    <div class="practice-editor-line dim">
-                      &lt;body&gt;
-                    </div>
-
-                    <div class="practice-editor-line active">
-                      &nbsp;&nbsp;&lt;h1&gt;Hello, world!&lt;/h1&gt;
-                    </div>
-
-                    <div class="practice-editor-line dim">
-                      &lt;/body&gt;
-                    </div>
-
-                  </div>
-
-
-                  <div class="practice-result">
-
-                    ✓
-                    Correct answer
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <div class="practice-floating">
-
-                <div class="practice-floating-title">
-                  CHECK RESULTS
-                </div>
-
-                <div class="practice-floating-row">
-
-                  <span>
-                    Syntax
-                  </span>
-
-                  <span class="practice-check">
-                    PASS
-                  </span>
-
-                </div>
-
-                <div class="practice-floating-row">
-
-                  <span>
-                    Structure
-                  </span>
-
-                  <span class="practice-check">
-                    PASS
-                  </span>
-
-                </div>
-
-                <div class="practice-floating-row">
-
-                  <span>
-                    Answer
-                  </span>
-
-                  <span class="practice-check">
-                    PASS
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="reveal">
-
-              <div class="section-kicker">
-                PRACTICE
-              </div>
-
-              <h2 class="section-title">
-                Don't just watch.
-                <br>
-                Write.
-              </h2>
-
-              <p class="section-description">
-
-                The fastest way to understand programming is
-                to use it. CodeLearn puts the editor right inside
-                the learning experience.
-
-              </p>
-
-
-              <div class="learning-list">
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    01
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Type your answer
-                    </h3>
-
-                    <p>
-                      Use the editor instead of copying a finished
-                      solution.
-                    </p>
-
-                  </div>
-
-                </div>
-
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    02
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Check your code
-                    </h3>
-
-                    <p>
-                      See whether your code matches what the lesson
-                      asks you to build.
-                    </p>
-
-                  </div>
-
-                </div>
-
-
-                <div class="learning-item">
-
-                  <div class="learning-number">
-                    03
-                  </div>
-
-                  <div>
-
-                    <h3>
-                      Fix and continue
-                    </h3>
-
-                    <p>
-                      Mistakes become part of the learning process,
-                      not a dead end.
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           STATS
-           ======================================================== -->
-
-      <section class="section section-dark">
-
-        <div class="container">
-
-          <div class="section-heading reveal">
-
-            <div class="section-kicker">
-              THE CODELEARN LIBRARY
-            </div>
-
-            <h2 class="section-title">
-              A lot to build.
-            </h2>
-
-          </div>
-
-
-          <div class="stats">
-
-            <div class="stat reveal">
-
-              <span class="stat-number">
-                30+
-              </span>
-
-              <span class="stat-label">
-                Structured lessons across
-                the first learning paths.
-              </span>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-              <span class="stat-number">
-                50+
-              </span>
-
-              <span class="stat-label">
-                Practice exercises and
-                coding tasks.
-              </span>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-              <span class="stat-number">
-                20+
-              </span>
-
-              <span class="stat-label">
-                Challenges designed to
-                test your understanding.
-              </span>
-
-            </div>
-
-
-            <div class="stat reveal">
-
-              <span class="stat-number">
-                0
-              </span>
-
-              <span class="stat-label">
-                Sign-in screens blocking
-                you from starting.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           STATEMENT
-           ======================================================== -->
-
-      <section class="statement-section">
-
-        <div class="container statement reveal">
-
-          <div class="statement-mark">
-            "
-          </div>
-
-          <h2>
-
-            You don't need to know
-            everything before you
-            <span>
-              start.
-            </span>
-
-          </h2>
-
-          <p>
-            Start with one line. Understand it. Change it.
-            Break it. Fix it. Then write the next one.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           FAQ
-           ======================================================== -->
-
-      <section class="section section-panel">
-
-        <div class="container">
-
-          <div class="section-heading reveal">
-
-            <div class="section-kicker">
-              QUESTIONS
-            </div>
-
-            <h2 class="section-title">
-              Before you start.
-            </h2>
-
-          </div>
-
-
-          <div class="faq">
-
-            <div class="faq-item reveal">
-
-              <button
-                class="faq-question"
-                type="button"
-              >
-
-                <span>
-                  Do I need an account?
-                </span>
-
-                <span class="faq-plus">
-                  +
-                </span>
-
-              </button>
-
-
-              <div class="faq-answer">
-
-                <div class="faq-answer-inner">
-
-                  No. CodeLearn is designed so you can open
-                  the site and start learning immediately.
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="faq-item reveal">
-
-              <button
-                class="faq-question"
-                type="button"
-              >
-
-                <span>
-                  Where do I write my code?
-                </span>
-
-                <span class="faq-plus">
-                  +
-                </span>
-
-              </button>
-
-
-              <div class="faq-answer">
-
-                <div class="faq-answer-inner">
-
-                  Interactive lessons include an editor directly
-                  inside the lesson. The guide can point to the
-                  exact area where you need to type.
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="faq-item reveal">
-
-              <button
-                class="faq-question"
-                type="button"
-              >
-
-                <span>
-                  What should I learn first?
-                </span>
-
-                <span class="faq-plus">
-                  +
-                </span>
-
-              </button>
-
-
-              <div class="faq-answer">
-
-                <div class="faq-answer-inner">
-
-                  HTML Foundations is the starting path. It
-                  introduces the basic structure of webpages before
-                  moving into CSS and JavaScript.
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="faq-item reveal">
-
-              <button
-                class="faq-question"
-                type="button"
-              >
-
-                <span>
-                  What happens when I make a mistake?
-                </span>
-
-                <span class="faq-plus">
-                  +
-                </span>
-
-              </button>
-
-
-              <div class="faq-answer">
-
-                <div class="faq-answer-inner">
-
-                  Mistakes are expected. CodeLearn gives feedback
-                  and keeps the lesson focused on the exact thing
-                  you need to fix.
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="faq-item reveal">
-
-              <button
-                class="faq-question"
-                type="button"
-              >
-
-                <span>
-                  Can I practice after finishing a lesson?
-                </span>
-
-                <span class="faq-plus">
-                  +
-                </span>
-
-              </button>
-
-
-              <div class="faq-answer">
-
-                <div class="faq-answer-inner">
-
-                  Yes. Practice and Challenges are available
-                  separately so you can keep using the concepts
-                  after completing lessons.
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ========================================================
-           FINAL CTA
-           ======================================================== -->
-
-      <section class="final-cta">
-
-        <div class="container cta-inner">
-
-          <h2>
-            Start with one line.
-          </h2>
-
-          <p>
-            No sign-in. No complicated setup.
-            Just open a lesson and start coding.
-          </p>
-
-          <button
-            class="cta-button"
-            type="button"
-            onclick="goToLesson()"
-          >
-            Start Learning
-          </button>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <!-- ==========================================================
-         FOOTER
-         ========================================================== -->
-
-    <footer class="footer">
-
-      <div class="container">
-
-        <div class="footer-top">
-
-          <div class="footer-brand">
-
-            <a
-              class="brand"
-              href="index.html"
-            >
-
-              <span class="brand-box">
-                code
-              </span>
-
-              <span class="brand-learn">
-                learn
-              </span>
-
-            </a>
-
-
-            <p>
-
-              An interactive place to learn coding by
-              writing code, practicing concepts, and
-              building skills.
-
-            </p>
-
-          </div>
-
-
-          <div class="footer-column">
-
-            <h4>
-              Learn
-            </h4>
-
-            <a href="lesson.html">
-              HTML
-            </a>
-
-            <a href="practice.html">
-              CSS
-            </a>
-
-            <a href="practice.html">
-              JavaScript
-            </a>
-
-          </div>
-
-
-          <div class="footer-column">
-
-            <h4>
-              Practice
-            </h4>
-
-            <a href="practice.html">
-              Exercises
-            </a>
-
-            <a href="challenges.html">
-              Challenges
-            </a>
-
-            <a href="progress.html">
-              Progress
-            </a>
-
-          </div>
-
-
-          <div class="footer-column">
-
-            <h4>
-              CodeLearn
-            </h4>
-
-            <a href="index.html">
-              Home
-            </a>
-
-            <a href="#paths">
-              Catalog
-            </a>
-
-            <a href="settings.html">
-              Settings
-            </a>
-
-          </div>
-
-
-          <div class="footer-column">
-
-            <h4>
-              Start
-            </h4>
-
-            <a href="lesson.html">
-              First Lesson
-            </a>
-
-            <a href="practice.html">
-              Practice
-            </a>
-
-            <a href="challenges.html">
-              Challenges
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-          <span>
-            CODELEARN
-          </span>
-
-          <div class="footer-status">
-
-            <span class="footer-status-dot"></span>
-
-            Learning system online
-
-          </div>
-
-          <span>
-            NO ACCOUNT REQUIRED
-          </span>
-
-        </div>
-
-      </div>
-
-    </footer>
-
-
-    <!-- ==========================================================
-         SEARCH OVERLAY
-         ========================================================== -->
-
-    <div
-      class="search-overlay"
-      id="searchOverlay"
-      aria-hidden="true"
-    >
-
-      <div class="search-box">
-
-        <div class="search-top">
-
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ffd900"
-            stroke-width="2"
-          >
-
-            <circle
-              cx="11"
-              cy="11"
-              r="6"
-            ></circle>
-
-            <path
-              d="M16 16L21 21"
-            ></path>
-
-          </svg>
-
-
-          <input
-            class="search-input"
-            id="searchInput"
-            type="text"
-            placeholder="Search CodeLearn..."
-            autocomplete="off"
-          >
-
-
-          <button
-            class="search-close"
-            id="closeSearch"
-            type="button"
-          >
-            ×
-          </button>
-
-        </div>
-
-
-        <div
-          class="search-results"
-          id="searchResults"
-        >
-
-          <a
-            class="search-result"
-            href="lesson.html"
-          >
-            HTML Foundations — Start your first lesson
-          </a>
-
-          <a
-            class="search-result"
-            href="practice.html"
-          >
-            Practice — Try coding exercises
-          </a>
-
-          <a
-            class="search-result"
-            href="challenges.html"
-          >
-            Challenges — Test your skills
-          </a>
-
-          <a
-            class="search-result"
-            href="progress.html"
-          >
-            Progress — View your learning progress
-          </a>
-
-        </div>
-
-      </div>
-
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-content">
+    <h2>Start building.</h2>
+    <p>
+      Pick a lesson, write your first line of code, and start turning
+      concepts into projects.
+    </p>
+    <button class="cta-button" id="ctaStart">Start Learning</button>
+  </div>
+</section>
+```
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+
+```
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">&lt;/&gt;</span>
+        <span>Code<span class="brand-accent">Learn</span></span>
+      </a>
+
+      <p class="footer-description">
+        A practical coding learning platform built around interactive
+        lessons, practice, challenges, and projects.
+      </p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Learn</h4>
+      <a href="lesson.html">Lessons</a>
+      <a href="practice.html">Practice</a>
+      <a href="challenges.html">Challenges</a>
+      <a href="progress.html">Progress</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Paths</h4>
+      <a href="lesson.html?path=js">JavaScript</a>
+      <a href="lesson.html?path=web">Web Development</a>
+      <a href="lesson.html?path=interactive">Interactive JS</a>
+      <a href="lesson.html?path=projects">Projects</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Platform</h4>
+      <a href="settings.html">Settings</a>
+      <a href="progress.html">Your Progress</a>
+      <a href="challenges.html">Challenge Library</a>
+      <a href="lesson.html">Start Learning</a>
     </div>
 
   </div>
 
+  <div class="footer-bottom">
+    <span>CODELEARN</span>
+    <span>BUILD • PRACTICE • LEARN</span>
+  </div>
+</div>
+```
+
+  </footer>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <div class="search-row">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#777780" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+
+```
+    <input
+      class="search-input"
+      id="searchInput"
+      type="text"
+      placeholder="Search lessons, challenges, topics..."
+      autocomplete="off"
+    >
+
+    <button class="search-close" id="searchClose">×</button>
+  </div>
+
+  <div class="search-results">
+    <a class="search-result" href="lesson.html">JavaScript Fundamentals</a>
+    <a class="search-result" href="lesson.html?path=web">Web Development</a>
+    <a class="search-result" href="lesson.html?path=interactive">Interactive JavaScript</a>
+    <a class="search-result" href="practice.html">Practice</a>
+    <a class="search-result" href="challenges.html">Challenges</a>
+    <a class="search-result" href="progress.html">Progress</a>
+  </div>
+</div>
+```
+
+  </div>
 
   <script>
-
     /* ============================================================
-       CODELEARN HOME SCRIPT
+       CODELEARN HOME
        ============================================================ */
 
+    const PATHS = {
+      js: {
+        total: 10,
+        name: "JavaScript Fundamentals",
+        description: "Start with the fundamentals and build your programming foundation."
+      },
 
-    /* ============================================================
-       NAVIGATION
-       ============================================================ */
+      web: {
+        total: 8,
+        name: "Web Development",
+        description: "Build websites with HTML, CSS, and JavaScript."
+      },
 
-    function goToLesson()
-    {
-      window.location.href = "lesson.html";
+      interactive: {
+        total: 8,
+        name: "Interactive JavaScript",
+        description: "Make websites respond to users and behave like applications."
+      },
+
+      projects: {
+        total: 6,
+        name: "Build Projects",
+        description: "Put your skills together and build real projects."
+      }
+    };
+
+
+    function readJSON(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+
+        if (!value) {
+          return fallback;
+        }
+
+        return JSON.parse(value);
+      } catch {
+        return fallback;
+      }
     }
 
 
-    function scrollToPaths()
-    {
-      const paths =
-        document.getElementById("paths");
+    function numberValue(key) {
+      const value = Number(localStorage.getItem(key));
 
-      if (!paths)
-      {
-        return;
+      return Number.isFinite(value) && value >= 0
+        ? value
+        : 0;
+    }
+
+
+    function normalizePath(value) {
+      const path = String(value || "").toLowerCase().trim();
+
+      if (
+        path === "javascript" ||
+        path === "javascript fundamentals" ||
+        path === "js"
+      ) {
+        return "js";
       }
 
-      paths.scrollIntoView(
-        {
-          behavior: "smooth",
-          block: "start"
+      if (
+        path === "web" ||
+        path === "web development" ||
+        path === "html" ||
+        path === "css"
+      ) {
+        return "web";
+      }
+
+      if (
+        path === "interactive" ||
+        path === "interactive javascript"
+      ) {
+        return "interactive";
+      }
+
+      if (
+        path === "projects" ||
+        path === "project" ||
+        path === "build projects"
+      ) {
+        return "projects";
+      }
+
+      return "js";
+    }
+
+
+    function getCompletedLessonRecords() {
+      const records = readJSON("codelearnLessons", []);
+
+      if (!Array.isArray(records)) {
+        return [];
+      }
+
+      return records.filter(record => {
+        if (!record) {
+          return false;
         }
+
+        return (
+          record.completed === true ||
+          record.complete === true ||
+          record.status === "complete" ||
+          record.status === "completed"
+        );
+      });
+    }
+
+
+    function getCompletedLessonsByPath() {
+      const counts = {
+        js: 0,
+        web: 0,
+        interactive: 0,
+        projects: 0
+      };
+
+      const records = getCompletedLessonRecords();
+      const seen = new Set();
+
+      records.forEach(record => {
+        const path = normalizePath(
+          record.path ||
+          record.category ||
+          record.track ||
+          record.course ||
+          record.type
+        );
+
+        const id =
+          record.id ||
+          record.lessonId ||
+          record.slug ||
+          `${path}:${JSON.stringify(record)}`;
+
+        if (!seen.has(id)) {
+          seen.add(id);
+          counts[path]++;
+        }
+      });
+
+      const activity = readJSON("codelearnActivity", []);
+
+      if (Array.isArray(activity)) {
+        activity.forEach(item => {
+          if (!item) {
+            return;
+          }
+
+          const completed =
+            item.completed === true ||
+            item.complete === true ||
+            item.status === "complete" ||
+            item.status === "completed" ||
+            item.type === "lesson_complete";
+
+          if (!completed) {
+            return;
+          }
+
+          const path = normalizePath(
+            item.path ||
+            item.category ||
+            item.track ||
+            item.course
+          );
+
+          const id =
+            item.lessonId ||
+            item.id ||
+            item.slug ||
+            item.title;
+
+          if (!id) {
+            return;
+          }
+
+          const key = `${path}:${id}`;
+
+          if (!seen.has(key)) {
+            seen.add(key);
+            counts[path]++;
+          }
+        });
+      }
+
+      return counts;
+    }
+
+
+    function getPathProgress() {
+      const completed = getCompletedLessonsByPath();
+
+      const legacyComplete =
+        localStorage.getItem("codelearnLessonComplete") === "true" ||
+        localStorage.getItem("codelearnLessonComplete") === "complete";
+
+      const legacyStep = Math.max(
+        0,
+        numberValue("codelearnLessonStep")
+      );
+
+      if (
+        legacyComplete &&
+        completed.js === 0
+      ) {
+        completed.js = 1;
+      }
+
+      if (
+        legacyStep > completed.js
+      ) {
+        completed.js = Math.min(
+          PATHS.js.total,
+          legacyStep
+        );
+      }
+
+      const solvedPractice = numberValue("codelearnSolvedPractice");
+
+      if (solvedPractice > 0) {
+        completed.js = Math.max(
+          completed.js,
+          Math.min(
+            PATHS.js.total,
+            Math.floor(solvedPractice / 2)
+          )
+        );
+      }
+
+      const projects = readJSON("codelearnProjects", []);
+
+      if (Array.isArray(projects)) {
+        const finishedProjects = projects.filter(project => {
+          if (!project) {
+            return false;
+          }
+
+          return (
+            project.completed === true ||
+            project.complete === true ||
+            project.status === "complete" ||
+            project.status === "completed"
+          );
+        });
+
+        completed.projects = Math.max(
+          completed.projects,
+          finishedProjects.length
+        );
+      }
+
+      Object.keys(completed).forEach(path => {
+        completed[path] = Math.min(
+          PATHS[path].total,
+          Math.max(0, completed[path])
+        );
+      });
+
+      return completed;
+    }
+
+
+    function getOverallProgress(progress) {
+      let completed = 0;
+      let total = 0;
+
+      Object.keys(PATHS).forEach(path => {
+        completed += progress[path];
+        total += PATHS[path].total;
+      });
+
+      if (!total) {
+        return 0;
+      }
+
+      return Math.round(
+        completed / total * 100
       );
     }
 
 
-    /* ============================================================
-       SEARCH
-       ============================================================ */
+    function renderProgress() {
+      const progress = getPathProgress();
+      const overall = getOverallProgress(progress);
 
-    const openSearchButton =
-      document.getElementById(
-        "openSearch"
-      );
+      const heroProgress =
+        document.getElementById("heroProgress");
+
+      const heroProgressBar =
+        document.getElementById("heroProgressBar");
+
+      if (heroProgress) {
+        heroProgress.textContent = `${overall}%`;
+      }
+
+      if (heroProgressBar) {
+        heroProgressBar.style.width = `${overall}%`;
+      }
+
+      const pathCards =
+        document.querySelectorAll(".path");
+
+      pathCards.forEach(card => {
+        const path = card.dataset.path;
+
+        if (!PATHS[path]) {
+          return;
+        }
+
+        const completed = progress[path];
+        const total = PATHS[path].total;
+
+        const percent = Math.round(
+          completed / total * 100
+        );
+
+        const percentElement =
+          card.querySelector(".path-percent");
+
+        const fill =
+          card.querySelector(".progress-fill");
+
+        const lessons =
+          card.querySelector(".path-lessons");
+
+        if (percentElement) {
+          percentElement.textContent =
+            `${percent}%`;
+        }
+
+        if (fill) {
+          fill.style.width =
+            `${percent}%`;
+        }
+
+        if (lessons) {
+          const noun =
+            path === "projects"
+              ? "projects"
+              : "lessons";
+
+          lessons.textContent =
+            `${completed} / ${total} ${noun}`;
+        }
+      });
 
 
-    const closeSearchButton =
-      document.getElementById(
-        "closeSearch"
-      );
+      const jsPercent =
+        Math.round(
+          progress.js / PATHS.js.total * 100
+        );
 
+      const continueTitle =
+        document.getElementById("continueTitle");
+
+      const continueDescription =
+        document.getElementById("continueDescription");
+
+      const continueBar =
+        document.getElementById("continueBar");
+
+      const continuePercent =
+        document.getElementById("continuePercent");
+
+      if (continueTitle) {
+        continueTitle.textContent =
+          PATHS.js.name;
+      }
+
+      if (continueDescription) {
+        continueDescription.textContent =
+          progress.js >= PATHS.js.total
+            ? "You completed the JavaScript fundamentals path. Keep building."
+            : PATHS.js.description;
+      }
+
+      if (continueBar) {
+        continueBar.style.width =
+          `${jsPercent}%`;
+      }
+
+      if (continuePercent) {
+        continuePercent.textContent =
+          `${jsPercent}%`;
+      }
+    }
+
+
+    function renderStats() {
+      const lessons =
+        getCompletedLessonRecords().length;
+
+      const challenges =
+        readJSON("codelearnSolvedChallenges", []);
+
+      const challengeCount =
+        Array.isArray(challenges)
+          ? challenges.length
+          : numberValue("codelearnSolvedPractice");
+
+      const xp =
+        numberValue("codelearnPracticeXP");
+
+      const streak =
+        numberValue("codelearnStreak");
+
+      const statLessons =
+        document.getElementById("statLessons");
+
+      const statChallenges =
+        document.getElementById("statChallenges");
+
+      const statXP =
+        document.getElementById("statXP");
+
+      const statStreak =
+        document.getElementById("statStreak");
+
+      if (statLessons) {
+        statLessons.textContent = lessons;
+      }
+
+      if (statChallenges) {
+        statChallenges.textContent = challengeCount;
+      }
+
+      if (statXP) {
+        statXP.textContent = xp;
+      }
+
+      if (statStreak) {
+        statStreak.textContent = streak;
+      }
+    }
+
+
+    /* NAVIGATION */
+
+    document.getElementById("navStart")
+      .addEventListener("click", () => {
+        window.location.href = "lesson.html";
+      });
+
+
+    document.getElementById("ctaStart")
+      .addEventListener("click", () => {
+        window.location.href = "lesson.html";
+      });
+
+
+    document.querySelectorAll(".path")
+      .forEach(card => {
+        card.addEventListener("click", () => {
+          const path = card.dataset.path;
+
+          window.location.href =
+            `lesson.html?path=${encodeURIComponent(path)}`;
+        });
+      });
+
+
+    /* MOBILE MENU */
+
+    const nav =
+      document.getElementById("nav");
+
+    const mobileButton =
+      document.getElementById("mobileButton");
+
+    mobileButton.addEventListener("click", () => {
+      nav.classList.toggle("mobile-open");
+    });
+
+
+    document.querySelectorAll(".nav-link")
+      .forEach(link => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("mobile-open");
+        });
+      });
+
+
+    /* SEARCH */
 
     const searchOverlay =
-      document.getElementById(
-        "searchOverlay"
-      );
+      document.getElementById("searchOverlay");
 
+    const searchButton =
+      document.getElementById("searchButton");
+
+    const searchClose =
+      document.getElementById("searchClose");
 
     const searchInput =
-      document.getElementById(
-        "searchInput"
-      );
+      document.getElementById("searchInput");
 
 
-    const searchResults =
-      document.getElementById(
-        "searchResults"
-      );
-
-
-    function openSearch()
-    {
-      if (!searchOverlay)
-      {
-        return;
-      }
-
+    function openSearch() {
       searchOverlay.classList.add("open");
 
-      searchOverlay.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      setTimeout(
-        function()
-        {
-          if (searchInput)
-          {
-            searchInput.focus();
-          }
-        },
-        100
-      );
+      setTimeout(() => {
+        searchInput.focus();
+      }, 100);
     }
 
 
-    function closeSearch()
-    {
-      if (!searchOverlay)
-      {
-        return;
-      }
-
+    function closeSearch() {
       searchOverlay.classList.remove("open");
-
-      searchOverlay.setAttribute(
-        "aria-hidden",
-        "true"
-      );
+      searchInput.value = "";
     }
 
 
-    if (openSearchButton)
-    {
-      openSearchButton.addEventListener(
-        "click",
-        openSearch
-      );
-    }
+    searchButton.addEventListener(
+      "click",
+      openSearch
+    );
 
 
-    if (closeSearchButton)
-    {
-      closeSearchButton.addEventListener(
-        "click",
-        closeSearch
-      );
-    }
+    searchClose.addEventListener(
+      "click",
+      closeSearch
+    );
 
 
-    if (searchOverlay)
-    {
-      searchOverlay.addEventListener(
-        "click",
-        function(event)
-        {
-          if (
-            event.target ===
-            searchOverlay
-          )
-          {
-            closeSearch();
-          }
-        }
-      );
-    }
-
-
-    document.addEventListener(
-      "keydown",
-      function(event)
-      {
-        if (
-          event.key === "Escape"
-        )
-        {
+    searchOverlay.addEventListener(
+      "click",
+      event => {
+        if (event.target === searchOverlay) {
           closeSearch();
         }
       }
     );
 
 
-    /* ============================================================
-       SEARCH FILTER
-       ============================================================ */
-
-    if (searchInput)
-    {
-      searchInput.addEventListener(
-        "input",
-        function()
-        {
-          const query =
-            searchInput.value
-              .trim()
-              .toLowerCase();
-
-
-          const results =
-            searchResults.querySelectorAll(
-              ".search-result"
-            );
-
-
-          results.forEach(
-            function(result)
-            {
-              const text =
-                result.textContent
-                  .toLowerCase();
-
-
-              if (
-                query === "" ||
-                text.includes(query)
-              )
-              {
-                result.style.display =
-                  "block";
-              }
-              else
-              {
-                result.style.display =
-                  "none";
-              }
-            }
-          );
-        }
-      );
-    }
-
-
-    /* ============================================================
-       FAQ
-       ============================================================ */
-
-    const faqItems =
-      document.querySelectorAll(
-        ".faq-item"
-      );
-
-
-    faqItems.forEach(
-      function(item)
-      {
-        const button =
-          item.querySelector(
-            ".faq-question"
-          );
-
-
-        const answer =
-          item.querySelector(
-            ".faq-answer"
-          );
-
-
-        if (!button || !answer)
-        {
+    searchInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key !== "Enter") {
           return;
         }
 
+        const query =
+          searchInput.value.trim();
 
-        button.addEventListener(
-          "click",
-          function()
-          {
-            const wasOpen =
-              item.classList.contains(
-                "open"
-              );
+        if (!query) {
+          return;
+        }
 
-
-            faqItems.forEach(
-              function(other)
-              {
-                other.classList.remove(
-                  "open"
-                );
-
-                const otherAnswer =
-                  other.querySelector(
-                    ".faq-answer"
-                  );
-
-
-                if (otherAnswer)
-                {
-                  otherAnswer.style.maxHeight =
-                    null;
-                }
-              }
-            );
-
-
-            if (!wasOpen)
-            {
-              item.classList.add(
-                "open"
-              );
-
-              answer.style.maxHeight =
-                answer.scrollHeight +
-                "px";
-            }
-          }
-        );
+        window.location.href =
+          `lesson.html?search=${encodeURIComponent(query)}`;
       }
     );
 
-
-    /* ============================================================
-       SCROLL REVEAL
-       ============================================================ */
-
-    const revealElements =
-      document.querySelectorAll(
-        ".reveal"
-      );
-
-
-    const revealObserver =
-      new IntersectionObserver(
-        function(entries)
-        {
-          entries.forEach(
-            function(entry)
-            {
-              if (
-                entry.isIntersecting
-              )
-              {
-                entry.target.classList.add(
-                  "visible"
-                );
-
-                revealObserver.unobserve(
-                  entry.target
-                );
-              }
-            }
-          );
-        },
-        {
-          threshold: .12
-        }
-      );
-
-
-    revealElements.forEach(
-      function(element)
-      {
-        revealObserver.observe(
-          element
-        );
-      }
-    );
-
-
-    /* ============================================================
-       MOBILE MENU
-       ============================================================ */
-
-    const mobileMenu =
-      document.getElementById(
-        "mobileMenu"
-      );
-
-
-    if (mobileMenu)
-    {
-      mobileMenu.addEventListener(
-        "click",
-        function()
-        {
-          const links =
-            document.querySelector(
-              ".nav-links"
-            );
-
-
-          if (!links)
-          {
-            return;
-          }
-
-
-          const currentlyVisible =
-            links.style.display ===
-            "flex";
-
-
-          if (currentlyVisible)
-          {
-            links.style.display =
-              "";
-          }
-          else
-          {
-            links.style.position =
-              "fixed";
-
-            links.style.left =
-              "18px";
-
-            links.style.right =
-              "18px";
-
-            links.style.top =
-              "75px";
-
-            links.style.display =
-              "flex";
-
-            links.style.flexDirection =
-              "column";
-
-            links.style.gap =
-              "0";
-
-            links.style.padding =
-              "10px";
-
-            links.style.background =
-              "#0b0c1c";
-
-            links.style.border =
-              "1px solid #3a3a42";
-
-            links.style.zIndex =
-              "100";
-
-            links.querySelectorAll(
-              ".nav-link"
-            ).forEach(
-              function(link)
-              {
-                link.style.padding =
-                  "14px";
-
-                link.style.display =
-                  "block";
-              }
-            );
-          }
-        }
-      );
-    }
-
-
-    /* ============================================================
-       KEYBOARD SHORTCUT
-       ============================================================ */
 
     document.addEventListener(
       "keydown",
-      function(event)
-      {
-        const isSearch =
-          (
-            event.ctrlKey ||
-            event.metaKey
-          ) &&
-          event.key.toLowerCase() ===
-          "k";
-
-
-        if (isSearch)
-        {
+      event => {
+        if (
+          (event.ctrlKey || event.metaKey) &&
+          event.key.toLowerCase() === "k"
+        ) {
           event.preventDefault();
-
           openSearch();
         }
-      }
-    );
 
-
-    /* ============================================================
-       INITIALIZATION
-       ============================================================ */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function()
-      {
-        document.body.classList.add(
-          "codelearn-ready"
-        );
-
-
-        const completed =
-          localStorage.getItem(
-            "codelearnLesson1"
-          ) === "complete";
-
-
-        if (completed)
-        {
-          const progressFill =
-            document.querySelector(
-              ".progress-fill"
-            );
-
-
-          if (progressFill)
-          {
-            progressFill.style.width =
-              "100%";
-          }
+        if (event.key === "Escape") {
+          closeSearch();
         }
       }
     );
 
+
+    /* FAQ */
+
+    document.querySelectorAll(".faq-question")
+      .forEach(button => {
+        button.addEventListener("click", () => {
+          const item =
+            button.closest(".faq-item");
+
+          const answer =
+            item.querySelector(".faq-answer");
+
+          const open =
+            item.classList.contains("open");
+
+          document.querySelectorAll(".faq-item")
+            .forEach(other => {
+              other.classList.remove("open");
+
+              const otherAnswer =
+                other.querySelector(".faq-answer");
+
+              if (otherAnswer) {
+                otherAnswer.style.maxHeight = null;
+              }
+            });
+
+          if (!open) {
+            item.classList.add("open");
+
+            answer.style.maxHeight =
+              `${answer.scrollHeight}px`;
+          }
+        });
+      });
+
+
+    /* SCROLL REVEAL */
+
+    const revealElements =
+      document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      const observer =
+        new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: .1
+          }
+        );
+
+      revealElements.forEach(element => {
+        observer.observe(element);
+      });
+    } else {
+      revealElements.forEach(element => {
+        element.classList.add("visible");
+      });
+    }
+
+
+    /* INITIALIZE */
+
+    renderProgress();
+    renderStats();
+
+    window.addEventListener(
+      "storage",
+      () => {
+        renderProgress();
+        renderStats();
+      }
+    );
   </script>
 
 </body>
